@@ -13,7 +13,7 @@ class SessionValidator {
       await schema.validate(request.body);
       return next();
     } catch ({ errors }) {
-      return response.status(401).json({ errors });
+      return response.status(400).json({ errors });
     }
   }
 }

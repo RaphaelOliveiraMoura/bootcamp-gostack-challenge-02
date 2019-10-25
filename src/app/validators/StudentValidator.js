@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import {} from 'date-fns';
 
 import Student from '../models/Student';
 
@@ -24,7 +23,7 @@ class StudentValidator {
     try {
       await schema.validate(request.body, { abortEarly: false });
     } catch ({ errors }) {
-      return response.status(401).json({ errors });
+      return response.status(400).json({ errors });
     }
 
     const emailAlreadyInUse = await Student.findOne({
@@ -32,7 +31,7 @@ class StudentValidator {
     });
 
     if (emailAlreadyInUse) {
-      return response.status(401).json({ error: 'Student already exists' });
+      return response.status(400).json({ error: 'Student already exists' });
     }
 
     return next();
@@ -42,7 +41,7 @@ class StudentValidator {
     const schema = Yup.object().shape({
       name: Yup.string(),
       email: Yup.string().email(),
-      age: Yup.number().min(0),
+      birth: Yup.date().max(new Date()),
       weigth: Yup.number().min(0),
       height: Yup.number().min(0),
     });
@@ -50,7 +49,7 @@ class StudentValidator {
     try {
       await schema.validate(request.body, { abortEarly: false });
     } catch ({ errors }) {
-      return response.status(401).json({ errors });
+      return response.status(400).json({ errors });
     }
 
     const { id } = request.params;
@@ -60,7 +59,7 @@ class StudentValidator {
     });
 
     if (!student) {
-      return response.status(401).json({ error: 'Student does not exist' });
+      return response.status(400).json({ error: 'Student does not exist' });
     }
 
     request.student = student;
@@ -71,7 +70,7 @@ class StudentValidator {
       });
 
       if (studentAlreadyExists) {
-        return response.status(401).json({
+        return response.status(400).json({
           error: 'You cannot set this email, because it already in use',
         });
       }

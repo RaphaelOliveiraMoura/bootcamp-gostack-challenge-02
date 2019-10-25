@@ -8,11 +8,11 @@ class SessionController {
 
     const user = await User.findOne({ where: { email } });
     if (!user)
-      return response.status(401).json({ error: 'User does not exists' });
+      return response.status(400).json({ error: 'User does not exists' });
 
     const passwordMatch = await user.checkPassword(password);
     if (!passwordMatch)
-      return response.status(401).json({ error: 'Invalid password' });
+      return response.status(400).json({ error: 'Invalid password' });
 
     const { id, name } = user;
 
