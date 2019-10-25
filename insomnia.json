@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2019-10-25T12:39:36.818Z",
+  "__export_date": "2019-10-25T18:33:13.082Z",
   "__export_source": "insomnia.desktop.app:v7.0.1",
   "resources": [
     {
@@ -52,7 +52,7 @@
       "authentication": { "token": "{{ token  }}", "type": "bearer" },
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"plan_id\": 3,\n\t\"start_date\" : \"2020-08-26\"\n}"
+        "text": "{\n\t\"plan_id\": 3,\n\t\"start_date\" : \"2017-08-27T12:00:00.3Z\"\n}"
       },
       "created": 1571619757147,
       "description": "",
@@ -66,7 +66,7 @@
       "isPrivate": false,
       "metaSortKey": -1571617314703.5,
       "method": "POST",
-      "modified": 1571620288446,
+      "modified": 1572027638386,
       "name": "Create",
       "parameters": [],
       "parentId": "fld_269021e55f084ffa98bd90e5e39cfe85",
@@ -75,7 +75,29 @@
       "settingRebuildPath": true,
       "settingSendCookies": true,
       "settingStoreCookies": true,
-      "url": "{{ base_url  }}/students/1/enrolments",
+      "url": "{{ base_url  }}/enrolments/1",
+      "_type": "request"
+    },
+    {
+      "_id": "req_99acb46b560f4edcb28d07c2a0385693",
+      "authentication": { "token": "{{ token  }}", "type": "bearer" },
+      "body": {},
+      "created": 1572024709365,
+      "description": "",
+      "headers": [],
+      "isPrivate": false,
+      "metaSortKey": -1571616567574.25,
+      "method": "DELETE",
+      "modified": 1572027995878,
+      "name": "Delete",
+      "parameters": [],
+      "parentId": "fld_269021e55f084ffa98bd90e5e39cfe85",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/enrolments/1",
       "_type": "request"
     },
     {
@@ -107,8 +129,8 @@
       "environment": {},
       "environmentPropertyOrder": null,
       "metaSortKey": -1571615814127,
-      "modified": 1571615814127,
-      "name": "DiscountPlan",
+      "modified": 1572027622730,
+      "name": "Plan",
       "parentId": "wrk_d6d92e31430349079a930a073dcc65ff",
       "_type": "request_group"
     },
@@ -264,7 +286,10 @@
     {
       "_id": "req_9a8525789bb84a92b3beb5aa819d90db",
       "authentication": { "token": "{{ token  }}", "type": "bearer" },
-      "body": { "mimeType": "application/json", "text": "{\n\t\"age\": 22\n}" },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"birth\": \"2002-08-26T00:00:00.000Z\"\n}"
+      },
       "created": 1571611583872,
       "description": "",
       "headers": [
@@ -277,7 +302,7 @@
       "isPrivate": false,
       "metaSortKey": -1571610901843.5,
       "method": "PUT",
-      "modified": 1571611626819,
+      "modified": 1572027440983,
       "name": "Update",
       "parameters": [],
       "parentId": "fld_354d281982244f648c2de5bb6fff5105",
