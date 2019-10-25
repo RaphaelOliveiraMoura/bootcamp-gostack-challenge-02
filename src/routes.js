@@ -3,33 +3,49 @@ import { Router } from 'express';
 import authMiddleware from './app/middlewares/auth';
 
 import SessionController from './app/controllers/SessionController';
-import SessionValidator from './app/validators/SessionValidator';
-
 import StudentController from './app/controllers/StudentController';
-import StudentValidator from './app/validators/StudentValidator';
-
-import DiscountPlanController from './app/controllers/DiscountPlanController';
-
+import PlanController from './app/controllers/PlanController';
 import EnrolmentController from './app/controllers/EnrolmentController';
+
+import SessionValidator from './app/validators/SessionValidator';
+import StudentValidator from './app/validators/StudentValidator';
+import PlanValidator from './app/validators/PlanValidator';
+import EnrolmentValidator from './app/validators/EnrolmentValidator';
 
 const routes = new Router();
 
+/** Session */
 routes.post('/sessions', SessionValidator.store, SessionController.store);
 
 routes.use(authMiddleware);
 
+/** Student */
 routes.get('/students', StudentController.index);
 routes.post('/students', StudentValidator.store, StudentController.store);
 routes.put('/students/:id', StudentValidator.update, StudentController.update);
 
-routes.get('/plans', DiscountPlanController.index);
-routes.post('/plans', DiscountPlanController.store);
-routes.put('/plans/:id', DiscountPlanController.update);
-routes.delete('/plans/:id', DiscountPlanController.delete);
+/** Plan */
+routes.get('/plans', PlanController.index);
+routes.post('/plans', PlanValidator.store, PlanController.store);
+routes.put('/plans/:id', PlanValidator.update, PlanController.update);
+routes.delete('/plans/:id', PlanValidator.delete, PlanController.delete);
 
+/** Enrolment */
 routes.get('/enrolments', EnrolmentController.index);
-routes.post('/students/:studentId/enrolments', EnrolmentController.store);
-routes.put('/students/:studentId/enrolments', EnrolmentController.update);
-routes.delete('/students/:studentId/enrolments', EnrolmentController.delete);
+routes.post(
+  '/enrolments/:studentId',
+  EnrolmentValidator.store,
+  EnrolmentController.store
+);
+routes.put(
+  '/enrolments/:studentId',
+  EnrolmentValidator.update,
+  EnrolmentController.update
+);
+routes.delete(
+  '/enrolments/:id',
+  EnrolmentValidator.delete,
+  EnrolmentController.delete
+);
 
 export default routes;

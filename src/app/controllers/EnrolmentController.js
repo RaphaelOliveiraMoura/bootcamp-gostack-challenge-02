@@ -1,6 +1,4 @@
-import { addMonths, parseISO } from 'date-fns';
 import Enrolment from '../models/Enrolment';
-import DiscountPlan from '../models/DiscountPlan';
 
 class EnrolmentController {
   async index(request, response) {
@@ -12,22 +10,16 @@ class EnrolmentController {
           attributes: ['id', 'title', 'duration', 'price'],
         },
       ],
+      order: [['start_date', 'DESC']],
     });
     return response.json(enrolments);
   }
 
   async store(request, response) {
     const student_id = request.params.studentId;
-    const { plan_id, start_date } = request.body;
-
-    const plan = await DiscountPlan.findByPk(plan_id);
-
-    if (!plan) {
-      return response.status(400).json({ error: 'Invalid plan' });
-    }
-
+    const { start_date, plan_id } = request.body;
+    const { plan, end_date } = request;
     const price = plan.price * plan.duration;
-    const end_date = addMonths(parseISO(start_date), plan.duration);
 
     const enrolment = await Enrolment.create({
       plan_id,
@@ -41,11 +33,14 @@ class EnrolmentController {
   }
 
   async update(request, response) {
+    // TODO ...
     return response.json({});
   }
 
   async delete(request, response) {
-    return response.json({});
+    const { id } = request.params;
+    await Enrolment.destroy({ where: { id } });
+    return response.json({ message: 'Enrolment successfully canceled' });
   }
 }
 
