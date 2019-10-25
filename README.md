@@ -43,23 +43,32 @@ This is a application ...
 
 > Setting database
 
-To the database you need to have a SQL database remote or localy. At the moment all sensible variables is setted in the files (hard code), but for the future will be change to `environment variables`.
+To the database you need to have a SQL database remote or localy. All sensible configs should be setted in environment as `environments variables`.
 
-To setting the database configurations, change the `~/src/config/database.js` with your own configurations.
+To make this localy, just create a .env file in root of application and put the values like the template `.env.example` file with the values that you want.
 
-```javascript
-module.exports = {
-  dialect: 'postgres',
-  host: 'localhost',
-  username: 'postgres',
-  password: 'postgres',
-  database: 'gympoint',
-  define: {
-    timestamps: true,
-    underscored: true,
-    underscoredAll: true,
-  },
-};
+```shell
+DB_DIALECT=postgres(default)
+DB_HOST=localhost(required)
+DB_USER=postgres(required)
+DB_PASS=postgres(required)
+DB_NAME=gympoint(required)
+```
+
+> Preparing database
+
+To prepare the database, we use Sequelize CLI, so to create and prepare database to use, just run:
+
+```shell
+  ~ yarn sequelize db:create
+  ~ yarn sequelize db:migrate
+  ~ yarn sequelize db:seed:all
+```
+
+If database already exists, just run the bellow command to delete it.
+
+```shell
+  ~ yarn sequelize db:drop
 ```
 
 > Using docker
