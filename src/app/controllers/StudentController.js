@@ -13,10 +13,10 @@ class StudentController {
 
   async update(request, response) {
     const { student } = request;
-    const { name, email, age, weigth, height } = await student.update(
+    const { name, email, age, birth, weigth, height } = await student.update(
       request.body
     );
-    response.json({ name, email, age, weigth, height });
+    response.json({ name, email, age, birth, weigth, height });
   }
 }
 
