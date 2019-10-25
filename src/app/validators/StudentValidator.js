@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import {} from 'date-fns';
 
 import Student from '../models/Student';
 
@@ -9,9 +10,9 @@ class StudentValidator {
       email: Yup.string()
         .email()
         .required(),
-      age: Yup.number()
+      birth: Yup.date()
         .required()
-        .min(0),
+        .max(new Date()),
       weigth: Yup.number()
         .required()
         .min(0),

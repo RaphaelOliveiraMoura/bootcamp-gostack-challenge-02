@@ -12,7 +12,7 @@ class Student extends Model {
           type: Sequelize.VIRTUAL,
           get() {
             return this.calculateAge();
-          }
+          },
         },
         weigth: Sequelize.FLOAT,
         height: Sequelize.FLOAT,
