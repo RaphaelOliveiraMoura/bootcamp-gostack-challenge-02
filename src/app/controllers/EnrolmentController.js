@@ -4,7 +4,15 @@ import DiscountPlan from '../models/DiscountPlan';
 
 class EnrolmentController {
   async index(request, response) {
-    const enrolments = await Enrolment.findAll();
+    const enrolments = await Enrolment.findAll({
+      include: [
+        { association: 'student', attributes: ['id', 'name', 'email'] },
+        {
+          association: 'plan',
+          attributes: ['id', 'title', 'duration', 'price'],
+        },
+      ],
+    });
     return response.json(enrolments);
   }
 
