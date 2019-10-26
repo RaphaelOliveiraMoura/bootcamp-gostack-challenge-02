@@ -1,3 +1,5 @@
+import Queue from '../../lib/Queue';
+import EnrolmentMail from '../jobs/EnrolmentMail';
 import Enrolment from '../models/Enrolment';
 
 class EnrolmentController {
@@ -20,12 +22,20 @@ class EnrolmentController {
     const { plan, end_date } = request;
     const price = plan.price * plan.duration;
 
-    const enrolment = await Enrolment.create({
+    const { id } = await Enrolment.create({
       plan_id,
       student_id,
       price,
       start_date,
       end_date,
+    });
+
+    const enrolment = await Enrolment.findByPk(id, {
+      include: ['student', 'plan'],
+    });
+
+    await Queue.add(EnrolmentMail.key, {
+      enrolment,
     });
 
     return response.json(enrolment);

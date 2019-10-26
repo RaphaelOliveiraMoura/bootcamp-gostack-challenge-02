@@ -105,7 +105,7 @@ class EnrolmentValidator {
     }
 
     /**
-     * Check student exists
+     * Check enrolment exists
      */
     const enrolment = await Enrolment.findByPk(request.params.id, {
       include: ['student', 'plan'],
