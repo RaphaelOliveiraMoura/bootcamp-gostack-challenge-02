@@ -10,20 +10,21 @@ class EnrolmentMail {
   async handle({ data }) {
     const { enrolment } = data;
 
-    console.log('A fila executou');
+    console.log('A fila executou ...');
 
     await Mail.sendMail({
       to: `${enrolment.student.name} <${enrolment.student.email}>`,
       subject: 'Matrícula realizada 🚀',
       template: 'enrolment',
       context: {
+        logo_source: `${process.env.APP_URL}/public/gympoint-logo.png`,
         name: enrolment.student.name,
         plan: enrolment.plan.title,
         duration: `${enrolment.plan.duration} meses`,
         price: enrolment.price,
         start_date: format(
           parseISO(enrolment.start_date),
-          "dd 'de' MMMM 'de' YYYY",
+          "dd 'de' MMMM 'de' yyyy",
           {
             locale: pt,
           }
