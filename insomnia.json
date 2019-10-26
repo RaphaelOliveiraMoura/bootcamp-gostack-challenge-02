@@ -1,9 +1,204 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2019-10-25T18:33:13.082Z",
+  "__export_date": "2019-10-26T16:05:20.695Z",
   "__export_source": "insomnia.desktop.app:v7.0.1",
   "resources": [
+    {
+      "_id": "req_efbfe936cf33467ebf040e0783886663",
+      "authentication": { "token": "{{ token  }}", "type": "bearer" },
+      "body": {},
+      "created": 1572102730429,
+      "description": "",
+      "headers": [],
+      "isPrivate": false,
+      "metaSortKey": -1572102730429,
+      "method": "GET",
+      "modified": 1572104247644,
+      "name": "List",
+      "parameters": [],
+      "parentId": "fld_a7d4d1ca125c430983080925cd1bcaa3",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/help-orders",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_a7d4d1ca125c430983080925cd1bcaa3",
+      "created": 1572102704094,
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1572102704094,
+      "modified": 1572102704094,
+      "name": "Answer Help Order",
+      "parentId": "wrk_d6d92e31430349079a930a073dcc65ff",
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_d6d92e31430349079a930a073dcc65ff",
+      "created": 1571610791757,
+      "description": "",
+      "modified": 1571610791757,
+      "name": "GymPoint",
+      "parentId": null,
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_e2a993a814d549db9aafad4a171d7ff5",
+      "authentication": { "token": "{{ token  }}", "type": "bearer" },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"answer\": \"Atualmente não é possivel\"\n}"
+      },
+      "created": 1572102725885,
+      "description": "",
+      "headers": [
+        {
+          "id": "pair_4c344b6c25ab48b38ab051b28afbcda3",
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "isPrivate": false,
+      "metaSortKey": -1572102725885,
+      "method": "POST",
+      "modified": 1572105821996,
+      "name": "Create",
+      "parameters": [],
+      "parentId": "fld_a7d4d1ca125c430983080925cd1bcaa3",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/help-orders/7/answer",
+      "_type": "request"
+    },
+    {
+      "_id": "req_d12633184d4a41acaad147d8ebffd3e9",
+      "authentication": {},
+      "body": {},
+      "created": 1572102718070,
+      "description": "",
+      "headers": [],
+      "isPrivate": false,
+      "metaSortKey": -1572102718070,
+      "method": "GET",
+      "modified": 1572104938446,
+      "name": "List",
+      "parameters": [],
+      "parentId": "fld_5375ca65b87d4e07bfbc47ce50586875",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/students/1/help-orders",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_5375ca65b87d4e07bfbc47ce50586875",
+      "created": 1572102696886,
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1572102696886,
+      "modified": 1572103540274,
+      "name": "Help Order",
+      "parentId": "wrk_d6d92e31430349079a930a073dcc65ff",
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_c922fd7c98c54250b70e23d58441e566",
+      "authentication": {},
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"question\": \"Como posso me cadastrar na plataforma?\"\n}"
+      },
+      "created": 1572102711061,
+      "description": "",
+      "headers": [
+        {
+          "id": "pair_2dcd0f50371141819440638a8b68553b",
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "isPrivate": false,
+      "metaSortKey": -1572102711061,
+      "method": "POST",
+      "modified": 1572104949326,
+      "name": "Create",
+      "parameters": [],
+      "parentId": "fld_5375ca65b87d4e07bfbc47ce50586875",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/students/1/help-orders",
+      "_type": "request"
+    },
+    {
+      "_id": "req_7ce8931105ac43218820a3491129f6dd",
+      "authentication": { "token": "", "type": "bearer" },
+      "body": {},
+      "created": 1572098208638,
+      "description": "",
+      "headers": [],
+      "isPrivate": false,
+      "metaSortKey": -1572098208638,
+      "method": "POST",
+      "modified": 1572103675794,
+      "name": "Create",
+      "parameters": [],
+      "parentId": "fld_30d881242af449b9ae0f7c2d10bea86c",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/students/1/checkins",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_30d881242af449b9ae0f7c2d10bea86c",
+      "created": 1572098200993,
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1572098200993,
+      "modified": 1572098200993,
+      "name": "Checkin",
+      "parentId": "wrk_d6d92e31430349079a930a073dcc65ff",
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_a5d9658b04ae4e3db48f7b5fc3dbb09d",
+      "authentication": { "token": "", "type": "bearer" },
+      "body": {},
+      "created": 1572098205566,
+      "description": "",
+      "headers": [],
+      "isPrivate": false,
+      "metaSortKey": -1572098205566,
+      "method": "GET",
+      "modified": 1572103682445,
+      "name": "List",
+      "parameters": [],
+      "parentId": "fld_30d881242af449b9ae0f7c2d10bea86c",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/students/1/checkins",
+      "_type": "request"
+    },
     {
       "_id": "req_da30a373b6f346b59e4986934ea3f74f",
       "authentication": { "token": "{{ token  }}", "type": "bearer" },
@@ -39,20 +234,11 @@
       "_type": "request_group"
     },
     {
-      "_id": "wrk_d6d92e31430349079a930a073dcc65ff",
-      "created": 1571610791757,
-      "description": "",
-      "modified": 1571610791757,
-      "name": "GymPoint",
-      "parentId": null,
-      "_type": "workspace"
-    },
-    {
       "_id": "req_e3be45e121e94aa8b2ea516e570ab6ab",
       "authentication": { "token": "{{ token  }}", "type": "bearer" },
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"plan_id\": 3,\n\t\"start_date\" : \"2017-08-27T12:00:00.3Z\"\n}"
+        "text": "{\n\t\"student_id\": 1,\n\t\"plan_id\": 3,\n\t\"start_date\" : \"2020-08-27T12:00:00.3Z\"\n}"
       },
       "created": 1571619757147,
       "description": "",
@@ -66,7 +252,7 @@
       "isPrivate": false,
       "metaSortKey": -1571617314703.5,
       "method": "POST",
-      "modified": 1572027638386,
+      "modified": 1572096120174,
       "name": "Create",
       "parameters": [],
       "parentId": "fld_269021e55f084ffa98bd90e5e39cfe85",
@@ -75,7 +261,38 @@
       "settingRebuildPath": true,
       "settingSendCookies": true,
       "settingStoreCookies": true,
-      "url": "{{ base_url  }}/enrolments/1",
+      "url": "{{ base_url  }}/enrolments",
+      "_type": "request"
+    },
+    {
+      "_id": "req_e96f535a27c54252a9a53b70d3f16e16",
+      "authentication": { "token": "{{ token  }}", "type": "bearer" },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"plan_id\": 1,\n\t\"start_date\" : \"2020-08-28T12:00:00.3Z\"\n}"
+      },
+      "created": 1572058413454,
+      "description": "",
+      "headers": [
+        {
+          "id": "pair_85d8fd8f6f7c46708d3f5f7283ff043c",
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "isPrivate": false,
+      "metaSortKey": -1571616941138.875,
+      "method": "PUT",
+      "modified": 1572059730653,
+      "name": "Update",
+      "parameters": [],
+      "parentId": "fld_269021e55f084ffa98bd90e5e39cfe85",
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingSendCookies": true,
+      "settingStoreCookies": true,
+      "url": "{{ base_url  }}/enrolments/2",
       "_type": "request"
     },
     {
@@ -271,7 +488,7 @@
       "isPrivate": false,
       "metaSortKey": -1571610980294,
       "method": "POST",
-      "modified": 1572007045669,
+      "modified": 1572095667233,
       "name": "Create",
       "parameters": [],
       "parentId": "fld_354d281982244f648c2de5bb6fff5105",
@@ -363,12 +580,12 @@
       "created": 1571610791804,
       "data": {
         "base_url": "http://localhost:3333",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTcyMDA1NjQzLCJleHAiOjE1NzI2MTA0NDN9.NNnfg6Lk4HCog2XrS321YVAkqqq8Nqt3U5Lb1SuF_lc"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNTcyMDU4MzM5LCJleHAiOjE1NzI2NjMxMzl9.Y4cl1mLHSsegVlU4mPrlektaqfFb02fEL4cXgie00IY"
       },
       "dataPropertyOrder": { "&": ["base_url", "token"] },
       "isPrivate": false,
       "metaSortKey": 1571610791804,
-      "modified": 1572005664163,
+      "modified": 1572058353615,
       "name": "Base Environment",
       "parentId": "wrk_d6d92e31430349079a930a073dcc65ff",
       "_type": "environment"
