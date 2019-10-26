@@ -11,6 +11,7 @@ class EnrolmentValidator {
      * Check body formmat
      */
     const schema = Yup.object().shape({
+      student_id: Yup.number().required(),
       plan_id: Yup.number().required(),
       start_date: Yup.date().required(),
     });
@@ -24,7 +25,7 @@ class EnrolmentValidator {
     /**
      * Check student exists
      */
-    const student = await Student.findByPk(request.params.studentId);
+    const student = await Student.findByPk(request.body.student_id);
 
     if (!student) {
       return response.status(400).json({ error: 'Student does not exists' });
@@ -55,12 +56,12 @@ class EnrolmentValidator {
     }
 
     /**
-     * Check student is already registered in the plain
+     * Check student is already registered in the plan
      */
 
     const studentAlreadyEnrolmented = await Enrolment.findOne({
       where: {
-        student_id: request.params.studentId,
+        student_id: request.body.student_id,
         plan_id: request.body.plan_id,
         [Op.or]: [
           {
@@ -89,7 +90,93 @@ class EnrolmentValidator {
   }
 
   async update(request, response, next) {
-    // TODO ...
+    /**
+     * Check body formmat
+     */
+    const schema = Yup.object().shape({
+      plan_id: Yup.number(),
+      start_date: Yup.date(),
+    });
+
+    try {
+      await schema.validate(request.body, { abortEarly: false });
+    } catch ({ errors }) {
+      return response.status(400).json({ errors });
+    }
+
+    /**
+     * Check student exists
+     */
+    const enrolment = await Enrolment.findByPk(request.params.id, {
+      include: ['student', 'plan'],
+    });
+
+    if (!enrolment) {
+      return response.status(400).json({ error: 'Enrolment does not exists' });
+    }
+
+    request.enrolment = enrolment;
+
+    /**
+     * Check plan exists
+     */
+    const plan = request.body.plan_id
+      ? await Plan.findByPk(request.body.plan_id)
+      : enrolment.plan;
+
+    if (!plan) {
+      return response.status(400).json({ error: 'Plan does not exists' });
+    }
+
+    request.plan = plan;
+
+    /**
+     * Check if date is after today
+     */
+
+    if (request.body.start_date) {
+      const start_date = parseISO(request.body.start_date);
+      const end_date = addMonths(start_date, plan.duration);
+
+      if (isBefore(start_date, new Date())) {
+        return response
+          .status(400)
+          .json({ error: 'You cannot enrolment a student in a past date' });
+      }
+
+      /**
+       * Check student is already registered in the plan
+       */
+
+      const studentAlreadyEnrolmented = await Enrolment.findOne({
+        where: {
+          id: { [Op.ne]: request.params.id },
+          student_id: enrolment.student.id,
+          plan_id: plan.id,
+          [Op.or]: [
+            {
+              start_date: {
+                [Op.between]: [startOfDay(start_date), startOfDay(end_date)],
+              },
+            },
+            {
+              end_date: {
+                [Op.between]: [startOfDay(start_date), startOfDay(end_date)],
+              },
+            },
+          ],
+        },
+      });
+
+      if (studentAlreadyEnrolmented) {
+        return response
+          .status(400)
+          .json({ error: 'Student already in a plan in this range date' });
+      }
+
+      request.end_date = end_date;
+    }
+
     return next();
   }
 

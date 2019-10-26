@@ -16,8 +16,7 @@ class EnrolmentController {
   }
 
   async store(request, response) {
-    const student_id = request.params.studentId;
-    const { start_date, plan_id } = request.body;
+    const { start_date, plan_id, student_id } = request.body;
     const { plan, end_date } = request;
     const price = plan.price * plan.duration;
 
@@ -33,8 +32,17 @@ class EnrolmentController {
   }
 
   async update(request, response) {
-    // TODO ...
-    return response.json({});
+    const { id: plan_id } = request.plan;
+    const { enrolment, end_date } = request;
+    const { start_date } = request.body;
+
+    await enrolment.update({
+      plan_id,
+      start_date,
+      end_date,
+    });
+
+    return response.json(enrolment);
   }
 
   async delete(request, response) {

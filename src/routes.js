@@ -32,13 +32,9 @@ routes.delete('/plans/:id', PlanValidator.delete, PlanController.delete);
 
 /** Enrolment */
 routes.get('/enrolments', EnrolmentController.index);
-routes.post(
-  '/enrolments/:studentId',
-  EnrolmentValidator.store,
-  EnrolmentController.store
-);
+routes.post('/enrolments', EnrolmentValidator.store, EnrolmentController.store);
 routes.put(
-  '/enrolments/:studentId',
+  '/enrolments/:id',
   EnrolmentValidator.update,
   EnrolmentController.update
 );
