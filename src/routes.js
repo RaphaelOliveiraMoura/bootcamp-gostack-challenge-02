@@ -6,11 +6,13 @@ import SessionController from './app/controllers/SessionController';
 import StudentController from './app/controllers/StudentController';
 import PlanController from './app/controllers/PlanController';
 import EnrolmentController from './app/controllers/EnrolmentController';
+import CheckinController from './app/controllers/CheckinController';
 
 import SessionValidator from './app/validators/SessionValidator';
 import StudentValidator from './app/validators/StudentValidator';
 import PlanValidator from './app/validators/PlanValidator';
 import EnrolmentValidator from './app/validators/EnrolmentValidator';
+import CheckinValidator from './app/validators/CheckinValidator';
 
 const routes = new Router();
 
@@ -42,6 +44,19 @@ routes.delete(
   '/enrolments/:id',
   EnrolmentValidator.delete,
   EnrolmentController.delete
+);
+
+/** Checkin */
+
+routes.get(
+  '/students/:studentId/checkins',
+  CheckinValidator.show,
+  CheckinController.show
+);
+routes.post(
+  '/students/:studentId/checkins',
+  CheckinValidator.store,
+  CheckinController.store
 );
 
 export default routes;
