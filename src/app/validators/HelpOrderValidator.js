@@ -1,9 +1,6 @@
-import { subDays } from 'date-fns';
-import { Op } from 'sequelize';
-import Checkin from '../models/Checkin';
 import Student from '../models/Student';
 
-class CheckinValidator {
+class HelpOrderValidator {
   async index(request, response, next) {
     const student = await Student.findByPk(request.params.studentId);
 
@@ -15,31 +12,20 @@ class CheckinValidator {
   }
 
   async store(request, response, next) {
-    const lastDate = subDays(new Date(), 7);
-
     const student = await Student.findByPk(request.params.studentId);
 
     if (!student) {
       return response.status(400).json({ error: 'Student does not exists' });
     }
 
-    const studentCheckins = await Checkin.count({
-      where: {
-        student_id: request.params.studentId,
-        created_at: {
-          [Op.between]: [lastDate, new Date()],
-        },
-      },
-    });
-
-    if (studentCheckins >= 7) {
+    if (!request.body.question) {
       return response
         .status(400)
-        .json({ error: 'You cannot make more then 7 checkins per week' });
+        .json({ error: 'You need to pass question field in request body' });
     }
 
     return next();
   }
 }
 
-export default new CheckinValidator();
+export default new HelpOrderValidator();

@@ -7,17 +7,45 @@ import StudentController from './app/controllers/StudentController';
 import PlanController from './app/controllers/PlanController';
 import EnrolmentController from './app/controllers/EnrolmentController';
 import CheckinController from './app/controllers/CheckinController';
+import HelpOrderController from './app/controllers/HelpOrderController';
+import AnswerHelpOrderController from './app/controllers/AnswerHelpOrderController';
 
 import SessionValidator from './app/validators/SessionValidator';
 import StudentValidator from './app/validators/StudentValidator';
 import PlanValidator from './app/validators/PlanValidator';
 import EnrolmentValidator from './app/validators/EnrolmentValidator';
 import CheckinValidator from './app/validators/CheckinValidator';
+import HelpOrderValidator from './app/validators/HelpOrderValidator';
+import AnswerHelpOrderValidator from './app/validators/AnswerHelpOrderValidator';
 
 const routes = new Router();
 
 /** Session */
 routes.post('/sessions', SessionValidator.store, SessionController.store);
+
+/** Checkin */
+routes.get(
+  '/students/:studentId/checkins',
+  CheckinValidator.index,
+  CheckinController.index
+);
+routes.post(
+  '/students/:studentId/checkins',
+  CheckinValidator.store,
+  CheckinController.store
+);
+
+/** Help Order */
+routes.get(
+  '/students/:studentId/help-orders',
+  HelpOrderValidator.index,
+  HelpOrderController.index
+);
+routes.post(
+  '/students/:studentId/help-orders',
+  HelpOrderValidator.store,
+  HelpOrderController.store
+);
 
 routes.use(authMiddleware);
 
@@ -46,17 +74,12 @@ routes.delete(
   EnrolmentController.delete
 );
 
-/** Checkin */
-
-routes.get(
-  '/students/:studentId/checkins',
-  CheckinValidator.show,
-  CheckinController.show
-);
+/** Help Order */
+routes.get('/help-orders', AnswerHelpOrderController.index);
 routes.post(
-  '/students/:studentId/checkins',
-  CheckinValidator.store,
-  CheckinController.store
+  '/help-orders/:id/answer',
+  AnswerHelpOrderValidator.store,
+  AnswerHelpOrderController.store
 );
 
 export default routes;

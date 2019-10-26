@@ -1,7 +1,7 @@
 import Checkin from '../models/Checkin';
 
 class CheckinController {
-  async show(request, response) {
+  async index(request, response) {
     const checkins = await Checkin.findAll({
       where: { student_id: request.params.studentId },
       include: ['student'],
