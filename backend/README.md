@@ -73,10 +73,10 @@ If database already exists, just run the bellow command to delete it.
 
 > Using docker
 
-You can sett your database with docker, using the follow commands:
+You can set your database with docker, using the follow commands:
 
 ```shell
-  ~ docker ...
+  ~ docker-compose up -d
 ```
 
 ## Documentation
