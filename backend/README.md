@@ -22,7 +22,11 @@
 
 This is a repository made in bootcamp gostack of [rocketseat](http://rocketseat.com.br).
 
-This is a application ...
+It consists in a software to manager a gym wich users can register and subscribe on available plans made by gym administrators.
+
+It project made part of the final revision, to finish the gostack bootcamp course, and it will be revisioned by rocketseat instructors.
+
+`P.S: I'm learning english, so all text present here probably has a lot of erros. But to improve my english skills I choosed write everything in english`
 
 ## Preparing and running application
 
@@ -84,3 +88,8 @@ You can set your database with docker, using the follow commands:
 There is a file called `insomnia.json` in the root of application, that is the exported documentation of [insomnia](https://insomnia.rest/).
 
 Insomnia is a software similar to postman, you use that to test the requests to your application server side, seeing the response for each route with it params.
+
+## Contributing
+
+This is a open repository and is abble to receive contributing for all people.
+If you have any question about project, just contact me or open a issue.
