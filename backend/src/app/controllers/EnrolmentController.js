@@ -5,6 +5,7 @@ import Enrolment from '../models/Enrolment';
 class EnrolmentController {
   async index(request, response) {
     const enrolments = await Enrolment.findAll({
+      attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
       include: [
         { association: 'student', attributes: ['id', 'name', 'email'] },
         {
