@@ -1,13 +1,35 @@
 import React from 'react';
+import * as Yup from 'yup';
 
-import { Container, Card, Logo, Title, Input, SubmitButton } from './styles';
+import {
+  Container,
+  FormCard,
+  Logo,
+  Title,
+  Input,
+  SubmitButton,
+} from './styles';
 
 import logo from '~/assets/logo.svg';
 
+import api from '~/services/api';
+
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .email('Insira um e-mail válido')
+    .required('Insira um e-mail'),
+  password: Yup.string().required('A senha é obrigatória'),
+});
+
 export default function SignIn() {
+  async function handleSubmit({ email, password }) {
+    const response = await api.post('/sessions', { email, password });
+    console.log(response.data);
+  }
+
   return (
     <Container>
-      <Card>
+      <FormCard schema={schema} onSubmit={handleSubmit}>
         <Logo src={logo} />
         <Title>GYMPOINT</Title>
         <Input
@@ -23,7 +45,7 @@ export default function SignIn() {
           placeholder="*********"
         />
         <SubmitButton>Entrar no sistema</SubmitButton>
-      </Card>
+      </FormCard>
     </Container>
   );
 }

@@ -13,7 +13,7 @@ export const Container = styled.div`
   background: #ee4d64;
 `;
 
-export const Card = styled(Form)`
+export const FormCard = styled(Form)`
   background: #fff;
   padding: 50px 30px;
   width: 360px;

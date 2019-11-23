@@ -3,14 +3,14 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function RouteWrapper({ component: Component, isPrivate = false, ...rest }) {
-  const { signed } = false;
+  const signed = false;
 
   if (!signed && isPrivate) {
     return <Redirect to="/" />;
   }
 
   if (signed && !isPrivate) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/students" />;
   }
 
   return <Route render={props => <Component {...props} />} {...rest} />;

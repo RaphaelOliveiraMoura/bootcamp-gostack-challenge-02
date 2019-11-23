@@ -9,7 +9,8 @@ import Students from '~/pages/Students';
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/" exact component={Students} />
+      <Route path="/" exact component={SignIn} />
+      <Route path="/students" component={Students} isPrivate />
     </Switch>
   );
 }
