@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 import {
@@ -12,7 +13,7 @@ import {
 
 import logo from '~/assets/logo.svg';
 
-import api from '~/services/api';
+import { singInRequest } from '~/store/modules/auth/actions';
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -22,9 +23,10 @@ const schema = Yup.object().shape({
 });
 
 export default function SignIn() {
+  const dispatch = useDispatch();
+
   async function handleSubmit({ email, password }) {
-    const response = await api.post('/sessions', { email, password });
-    console.log(response.data);
+    dispatch(singInRequest(email, password));
   }
 
   return (
