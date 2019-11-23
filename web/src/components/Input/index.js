@@ -13,6 +13,10 @@ export default function InputComponent({ className, ...rest }) {
 }
 
 InputComponent.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   className: PropTypes.string.isRequired,
+};
+
+InputComponent.defaultProps = {
+  label: null,
 };

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import { store } from '~/store';
 
+import Header from '~/components/Header';
+
 function RouteWrapper({ component: Component, isPrivate = false, ...rest }) {
   const { signed } = store.getState().auth;
 
@@ -15,7 +17,12 @@ function RouteWrapper({ component: Component, isPrivate = false, ...rest }) {
     return <Redirect to="/students" />;
   }
 
-  return <Route render={props => <Component {...props} />} {...rest} />;
+  return (
+    <>
+      {signed && <Header />}
+      <Route render={props => <Component {...props} />} {...rest} />
+    </>
+  );
 }
 
 RouteWrapper.propTypes = {

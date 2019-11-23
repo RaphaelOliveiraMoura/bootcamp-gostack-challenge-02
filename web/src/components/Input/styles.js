@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
 
   label {
     color: #444444;
@@ -10,12 +12,10 @@ export const Container = styled.div`
   }
 
   input {
-    margin-top: 8px;
     border: 1px solid #dddddd;
     padding: 10px 15px;
     color: #333;
     border-radius: 4px;
-    width: 100%;
   }
 
   span {

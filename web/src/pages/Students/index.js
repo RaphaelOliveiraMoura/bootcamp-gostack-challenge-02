@@ -1,9 +1,17 @@
 import React from 'react';
 
-// import { Container } from './styles';
-
-import Header from '~/components/Header';
+import { Container, ContentHeader, AddButton, FilterInput } from './styles';
 
 export default function Students() {
-  return <Header />;
+  return (
+    <Container>
+      <ContentHeader>
+        <h1>Gerenciando alunos</h1>
+        <div className="options">
+          <AddButton>CADASTRAR</AddButton>
+          <FilterInput name="filter" placeholder="Buscar aluno" />
+        </div>
+      </ContentHeader>
+    </Container>
+  );
 }

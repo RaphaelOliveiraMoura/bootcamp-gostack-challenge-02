@@ -38,6 +38,10 @@ export const Title = styled.h1`
 export const Input = styled(InputWrapper)`
   margin-top: 20px;
 
+  input {
+    margin-top: 8px;
+  }
+
   &:first-child {
     margin-top: 30px;
   }
@@ -45,4 +49,6 @@ export const Input = styled(InputWrapper)`
 
 export const SubmitButton = styled(Button)`
   margin-top: 15px;
+  padding: 12px 16px;
+  width: 100%;
 `;
