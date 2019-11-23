@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import store from '~/store';
+import { store } from '~/store';
 
 function RouteWrapper({ component: Component, isPrivate = false, ...rest }) {
   const { signed } = store.getState().auth;

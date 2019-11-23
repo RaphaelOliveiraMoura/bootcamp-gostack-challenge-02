@@ -1,10 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Container, Left, Option, Rigth } from './styles';
 
 import logo from '~/assets/logo.svg';
 
+import { singOut } from '~/store/modules/auth/actions';
+
 export default function Header() {
+  const dispatch = useDispatch();
+
+  function handleSignOut() {
+    dispatch(singOut());
+  }
+
   return (
     <Container>
       <Left>
@@ -20,7 +29,9 @@ export default function Header() {
       </Left>
       <Rigth>
         <span>Raphael de Oliveira</span>
-        <button type="button">sair do sistema</button>
+        <button type="button" onClick={handleSignOut}>
+          sair do sistema
+        </button>
       </Rigth>
     </Container>
   );
