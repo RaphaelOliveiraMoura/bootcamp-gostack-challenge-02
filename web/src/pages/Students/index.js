@@ -43,6 +43,11 @@ export default function Students() {
     setFilter(filterForm);
   }
 
+  async function handleDelete(id) {
+    await api.delete(`/students/${id}`);
+    setStudents(students.filter(student => student.id !== id));
+  }
+
   return (
     <Container>
       <ContentHeader>
@@ -63,7 +68,7 @@ export default function Students() {
               <th>NOME</th>
               <th>EMAIL</th>
               <th>IDADE</th>
-              <th />
+              <th> </th>
             </tr>
           )}
         </thead>
@@ -76,7 +81,12 @@ export default function Students() {
               <td>
                 <div className="options">
                   <EditButton type="button">editar</EditButton>
-                  <DeleteButton type="button">apagar</DeleteButton>
+                  <DeleteButton
+                    type="button"
+                    onClick={() => handleDelete(student.id)}
+                  >
+                    apagar
+                  </DeleteButton>
                 </div>
               </td>
             </tr>

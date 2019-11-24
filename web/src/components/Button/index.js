@@ -3,8 +3,12 @@ import PropTypes from 'prop-types';
 
 import { Container } from './styles';
 
-export default function Button({ children, className }) {
-  return <Container className={className}>{children}</Container>;
+export default function Button({ children, className, ...rest }) {
+  return (
+    <Container className={className} {...rest}>
+      {children}
+    </Container>
+  );
 }
 
 Button.propTypes = {

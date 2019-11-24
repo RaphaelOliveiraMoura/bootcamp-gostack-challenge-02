@@ -112,9 +112,16 @@ export const Table = styled.table`
   }
 
   @media (max-width: 620px) {
+    thead {
+      tr {
+        th:nth-child(1) {
+          display: none;
+        }
+      }
+    }
     tbody {
       tr {
-        td:nth-child(4) {
+        td:nth-child(1) {
           display: none;
         }
       }
