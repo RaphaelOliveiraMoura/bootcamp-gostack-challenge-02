@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Form } from '@rocketseat/unform';
 
 import {
   Container,
@@ -17,6 +18,7 @@ import api from '~/services/api';
 export default function Students() {
   const [students, setStudents] = useState([]);
 
+  const [filter, setFilter] = useState('');
   const [pages, setPages] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -26,6 +28,7 @@ export default function Students() {
         params: {
           page: currentPage,
           per_page: 7,
+          q: filter,
         },
       });
       setStudents(response.data);
@@ -33,7 +36,11 @@ export default function Students() {
     }
 
     loadStudents();
-  }, [currentPage]);
+  }, [currentPage, filter]);
+
+  async function handleFilterSubmit({ filter: filterForm }) {
+    setFilter(filterForm);
+  }
 
   return (
     <Container>
@@ -41,7 +48,9 @@ export default function Students() {
         <h1>Gerenciando alunos</h1>
         <div className="options">
           <AddButton>CADASTRAR</AddButton>
-          <FilterInput name="filter" placeholder="Buscar aluno" />
+          <Form onSubmit={handleFilterSubmit}>
+            <FilterInput name="filter" placeholder="Buscar aluno" />
+          </Form>
         </div>
       </ContentHeader>
       <Table>

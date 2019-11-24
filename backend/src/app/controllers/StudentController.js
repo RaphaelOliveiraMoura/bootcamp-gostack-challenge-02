@@ -1,10 +1,17 @@
+import { Op } from 'sequelize';
 import Student from '../models/Student';
 
 class StudentController {
   async index(request, response) {
-    const { page = 1, per_page = 5 } = request.query;
+    const { page = 1, per_page = 5, q = '' } = request.query;
 
     const { rows: students, count } = await Student.findAndCountAll({
+      where: {
+        [Op.or]: [
+          { name: { [Op.like]: `%${q}%` } },
+          { email: { [Op.like]: `%${q}%` } },
+        ],
+      },
       offset: (page - 1) * per_page,
       limit: per_page,
     });
