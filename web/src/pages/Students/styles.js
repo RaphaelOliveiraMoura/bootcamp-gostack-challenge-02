@@ -4,7 +4,9 @@ import Button from '~/components/Button';
 import Input from '~/components/Input';
 
 export const Container = styled.div`
-  margin: 30px 120px;
+  margin: 30px auto;
+  max-width: 1200px;
+  padding: 0 8px;
 `;
 
 export const ContentHeader = styled.div`
@@ -21,6 +23,19 @@ export const ContentHeader = styled.div`
   .options {
     display: flex;
     align-items: center;
+  }
+
+  @media (max-width: 620px) {
+    flex-direction: column;
+
+    .options {
+      margin-top: 16px;
+      flex-direction: column;
+
+      input {
+        margin-top: 8px;
+      }
+    }
   }
 `;
 
@@ -44,7 +59,7 @@ export const Table = styled.table`
 
   thead {
     tr {
-      td {
+      th {
         font-size: 16px;
         font-weight: bold;
         color: #444;
@@ -73,6 +88,34 @@ export const Table = styled.table`
         td {
           border-bottom: none;
           padding-bottom: 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 660px) {
+    thead {
+      tr {
+        th:nth-child(3) {
+          display: none;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td:nth-child(3) {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 620px) {
+    tbody {
+      tr {
+        td:nth-child(4) {
+          display: none;
         }
       }
     }

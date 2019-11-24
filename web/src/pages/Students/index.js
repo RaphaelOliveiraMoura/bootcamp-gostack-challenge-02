@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from '@rocketseat/unform';
+import { Link } from 'react-router-dom';
 
 import {
   Container,
@@ -47,7 +48,9 @@ export default function Students() {
       <ContentHeader>
         <h1>Gerenciando alunos</h1>
         <div className="options">
-          <AddButton>CADASTRAR</AddButton>
+          <Link to="/students/create">
+            <AddButton>CADASTRAR</AddButton>
+          </Link>
           <Form onSubmit={handleFilterSubmit}>
             <FilterInput name="filter" placeholder="Buscar aluno" />
           </Form>
