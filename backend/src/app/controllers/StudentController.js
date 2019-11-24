@@ -8,8 +8,8 @@ class StudentController {
     const { rows: students, count } = await Student.findAndCountAll({
       where: {
         [Op.or]: [
-          { name: { [Op.like]: `%${q}%` } },
-          { email: { [Op.like]: `%${q}%` } },
+          { name: { [Op.iLike]: `%${q}%` } },
+          { email: { [Op.iLike]: `%${q}%` } },
         ],
       },
       offset: (page - 1) * per_page,
@@ -32,6 +32,12 @@ class StudentController {
       request.body
     );
     response.json({ name, email, age, birth, weigth, height });
+  }
+
+  async destroy(request, response) {
+    const { id } = request.params;
+    await Student.destroy({ where: { id } });
+    response.json({ message: 'Student deleted' });
   }
 }
 
