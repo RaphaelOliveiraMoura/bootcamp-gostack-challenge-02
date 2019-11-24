@@ -1,9 +1,17 @@
 import Student from '../models/Student';
 
 class StudentController {
-  async index(_request, response) {
-    const students = await Student.findAll();
-    return response.json(students);
+  async index(request, response) {
+    const { page = 1, per_page = 5 } = request.query;
+
+    const { rows: students, count } = await Student.findAndCountAll({
+      offset: (page - 1) * per_page,
+      limit: per_page,
+    });
+
+    return response
+      .set({ total_pages: Math.ceil(count / per_page) })
+      .json(students);
   }
 
   async store(request, response) {
