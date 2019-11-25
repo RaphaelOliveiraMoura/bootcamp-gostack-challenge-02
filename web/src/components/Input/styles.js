@@ -9,6 +9,7 @@ export const Container = styled.div`
     color: #444444;
     font-size: 14px;
     font-weight: bold;
+    margin-bottom: 8px;
   }
 
   input {

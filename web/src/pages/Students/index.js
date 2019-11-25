@@ -113,7 +113,7 @@ export default function Students() {
           />
         </>
       ) : (
-        <EmptyContainer>Nenhum aluno cadastrado</EmptyContainer>
+        <EmptyContainer>Nenhum aluno encontrado</EmptyContainer>
       )}
     </Container>
   );

@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
+import { darken } from 'polished';
+
 export const Container = styled.button`
-  background: #ee4d64;
+  background: ${props => props.background || '#ee4d64'};
   color: #fff;
   font-weight: bold;
   font-size: 16px;
@@ -12,4 +14,8 @@ export const Container = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    background: ${props => darken(0.06, props.background || '#ee4d64')};
+  }
 `;

@@ -38,10 +38,6 @@ export const Title = styled.h1`
 export const Input = styled(InputWrapper)`
   margin-top: 20px;
 
-  input {
-    margin-top: 8px;
-  }
-
   &:first-child {
     margin-top: 30px;
   }
