@@ -21,6 +21,11 @@ class StudentController {
       .json(students);
   }
 
+  async show(request, response) {
+    const student = await Student.findByPk(request.params.id);
+    return response.json(student);
+  }
+
   async store(request, response) {
     const student = await Student.create(request.body);
     return response.status(201).json(student);

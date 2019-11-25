@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 
 import Student from '../models/Student';
@@ -66,7 +67,7 @@ class StudentValidator {
 
     if (request.body.email) {
       const studentAlreadyExists = await Student.findOne({
-        where: { email: request.body.email },
+        where: { email: request.body.email, id: { [Op.ne]: id } },
       });
 
       if (studentAlreadyExists) {

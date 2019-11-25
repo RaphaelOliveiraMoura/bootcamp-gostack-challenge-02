@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Form as FormWrapper } from '@rocketseat/unform';
 
 import Button from '~/components/Button';
 import InputWrapper from '~/components/Input';
@@ -27,7 +26,7 @@ export const ContentHeader = styled.div`
   }
 `;
 
-export const Form = styled(FormWrapper)`
+export const Card = styled.div`
   background: #fff;
   margin-top: 24px;
   padding: 30px;

@@ -15,6 +15,7 @@ import {
 import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
+import history from '~/services/history';
 
 export default function Students() {
   const [students, setStudents] = useState([]);
@@ -80,7 +81,12 @@ export default function Students() {
               <td>{student.age}</td>
               <td>
                 <div className="options">
-                  <EditButton type="button">editar</EditButton>
+                  <EditButton
+                    type="button"
+                    onClick={() => history.push(`/students/${student.id}`)}
+                  >
+                    editar
+                  </EditButton>
                   <DeleteButton
                     type="button"
                     onClick={() => handleDelete(student.id)}
