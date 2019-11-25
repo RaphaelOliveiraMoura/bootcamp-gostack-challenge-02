@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { parseISO, format } from 'date-fns';
+import { parseISO } from 'date-fns';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import {
   ContentHeader,
   Card,
   Input,
+  DatePicker,
   BackButton,
   SaveButton,
 } from './styles';
@@ -38,7 +39,7 @@ const schema = Yup.object().shape({
 export default function FormStudents({ match }) {
   const { id } = match.params;
 
-  const [initialData, setInitialData] = useState(null);
+  const [initialData, setInitialData] = useState({});
 
   useEffect(() => {
     async function loadStudentInf() {
@@ -47,7 +48,7 @@ export default function FormStudents({ match }) {
         const { birth, ...rest } = response.data;
         setInitialData({
           ...rest,
-          birth: format(parseISO(birth), 'yyyy-MM-dd'),
+          birth: parseISO(birth),
         });
       } catch (error) {
         history.push('/students/create');
@@ -92,7 +93,9 @@ export default function FormStudents({ match }) {
           <h1>{id ? 'Edição de aluno' : 'Cadastro de aluno'}</h1>
           <div className="options">
             <Link to="/students">
-              <BackButton type="button">VOLTAR</BackButton>
+              <BackButton background="#ccc" type="button">
+                VOLTAR
+              </BackButton>
             </Link>
             <SaveButton type="submit">SALVAR</SaveButton>
           </div>
@@ -105,11 +108,13 @@ export default function FormStudents({ match }) {
             placeholder="exemplo@email.com"
             label="ENDEREÇO DE E-MAIL"
           />
-          <section>
-            <Input name="birth" type="date" label="DATA NASCIMENTO" />
-            <Input name="weigth" type="number" label="PESO (em kg)" />
-            <Input name="height" type="number" step="0.01" label="ALTURA" />
-          </section>
+          <DatePicker
+            name="birth"
+            label="DATA NASCIMENTO"
+            placeholderText="dd/mm/yyyy"
+          />
+          <Input name="weigth" type="number" label="PESO (em kg)" />
+          <Input name="height" type="number" step="0.01" label="ALTURA" />
         </Card>
       </Form>
     </Container>

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import Button from '~/components/Button';
 import InputWrapper from '~/components/Input';
+import DatePickerWrapper from '~/components/DatePicker';
 
 export const Container = styled.div`
   margin: 30px auto;
@@ -31,39 +32,38 @@ export const Card = styled.div`
   margin-top: 24px;
   padding: 30px;
   border-radius: 4px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 16px;
+  grid-row-gap: 20px;
+`;
 
-  section {
-    display: flex;
-
-    div {
-      margin-top: 20px;
-
-      & + div {
-        margin-left: 16px;
-      }
-    }
+export const Input = styled(InputWrapper)`
+  &:nth-child(1) {
+    grid-column: 1 / 4;
   }
 
-  @media (max-width: 800px) {
-    section {
-      flex-direction: column;
+  &:nth-child(2) {
+    grid-column: 1 / 4;
+  }
 
-      div {
-        & + div {
-          margin-left: 0px;
-        }
+  @media (max-width: 820px) {
+    & {
+      &:nth-child(4) {
+        grid-column: 1 / 4;
+      }
+      &:nth-child(5) {
+        grid-column: 1 / 4;
       }
     }
   }
 `;
 
-export const Input = styled(InputWrapper)`
-  label {
-    margin-bottom: 8px;
-  }
-
-  & + div {
-    margin-top: 20px;
+export const DatePicker = styled(DatePickerWrapper)`
+  @media (max-width: 820px) {
+    & {
+      grid-column: 1 / 4;
+    }
   }
 `;
 
@@ -71,7 +71,6 @@ export const BackButton = styled(Button)`
   font-size: 14px;
   font-weight: bold;
   color: #fff;
-  background: #ccc;
 `;
 
 export const SaveButton = styled(Button)`
