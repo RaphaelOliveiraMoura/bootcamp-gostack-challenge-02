@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useField } from '@rocketseat/unform';
 import ReactDatePicker, { setDefaultLocale } from 'react-datepicker';
+import MaskedInput from 'react-text-mask';
 
 import PropTypes from 'prop-types';
 import pt from 'date-fns/locale/pt';
@@ -40,13 +41,18 @@ export default function DatePicker({ className, name, label, ...rest }) {
     <Container className={className}>
       {label && <span>{label}</span>}
       <ReactDatePicker
+        customInput={
+          <MaskedInput
+            mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
+          />
+        }
         name={fieldName}
         selected={selected}
-        maxTime={new Date()}
         onChange={date => setSelected(date)}
         ref={ref}
         autoComplete="off"
         dateFormat="P"
+        maxDate={new Date()}
         {...rest}
       />
       {error && <p>{error}</p>}
