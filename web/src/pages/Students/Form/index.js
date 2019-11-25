@@ -42,12 +42,16 @@ export default function FormStudents({ match }) {
 
   useEffect(() => {
     async function loadStudentInf() {
-      const response = await api.get(`/students/${id}`);
-      const { birth, ...rest } = response.data;
-      setInitialData({
-        ...rest,
-        birth: format(parseISO(birth), 'yyyy-MM-dd'),
-      });
+      try {
+        const response = await api.get(`/students/${id}`);
+        const { birth, ...rest } = response.data;
+        setInitialData({
+          ...rest,
+          birth: format(parseISO(birth), 'yyyy-MM-dd'),
+        });
+      } catch (error) {
+        history.push('/students/create');
+      }
     }
 
     if (id) {
