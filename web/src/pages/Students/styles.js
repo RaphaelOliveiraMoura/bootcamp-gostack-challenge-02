@@ -138,3 +138,15 @@ export const DeleteButton = styled.button`
   font-size: 15px;
   color: #de3b3b;
 `;
+
+export const EmptyContainer = styled.div`
+  background: #fff;
+  margin-top: 24px;
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  color: #ddd
+  border-radius: 4px;
+`;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from '@rocketseat/unform';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import {
   Container,
@@ -10,6 +11,7 @@ import {
   Table,
   EditButton,
   DeleteButton,
+  EmptyContainer,
 } from './styles';
 
 import Pagination from '~/components/Pagination';
@@ -45,8 +47,13 @@ export default function Students() {
   }
 
   async function handleDelete(id) {
-    await api.delete(`/students/${id}`);
-    setStudents(students.filter(student => student.id !== id));
+    try {
+      await api.delete(`/students/${id}`);
+      setStudents(students.filter(student => student.id !== id));
+      toast.success('Aluno deletado com sucesso');
+    } catch (error) {
+      toast.error('Erro ao deletar aluno');
+    }
   }
 
   return (
@@ -62,48 +69,52 @@ export default function Students() {
           </Form>
         </div>
       </ContentHeader>
-      <Table>
-        <thead>
-          {students.length > 0 && (
-            <tr>
-              <th>NOME</th>
-              <th>EMAIL</th>
-              <th>IDADE</th>
-              <th> </th>
-            </tr>
-          )}
-        </thead>
-        <tbody>
-          {students.map(student => (
-            <tr key={String(student.id)}>
-              <td>{student.name}</td>
-              <td>{student.email}</td>
-              <td>{student.age}</td>
-              <td>
-                <div className="options">
-                  <EditButton
-                    type="button"
-                    onClick={() => history.push(`/students/${student.id}`)}
-                  >
-                    editar
-                  </EditButton>
-                  <DeleteButton
-                    type="button"
-                    onClick={() => handleDelete(student.id)}
-                  >
-                    apagar
-                  </DeleteButton>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <Pagination
-        pages={pages}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      {students.length > 0 ? (
+        <>
+          <Table>
+            <thead>
+              <tr>
+                <th>NOME</th>
+                <th>EMAIL</th>
+                <th>IDADE</th>
+                <th> </th>
+              </tr>
+            </thead>
+            <tbody>
+              {students.map(student => (
+                <tr key={String(student.id)}>
+                  <td>{student.name}</td>
+                  <td>{student.email}</td>
+                  <td>{student.age}</td>
+                  <td>
+                    <div className="options">
+                      <EditButton
+                        type="button"
+                        onClick={() => history.push(`/students/${student.id}`)}
+                      >
+                        editar
+                      </EditButton>
+                      <DeleteButton
+                        type="button"
+                        onClick={() => handleDelete(student.id)}
+                      >
+                        apagar
+                      </DeleteButton>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <Pagination
+            pages={pages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </>
+      ) : (
+        <EmptyContainer>Nenhum aluno cadastrado</EmptyContainer>
+      )}
     </Container>
   );
 }

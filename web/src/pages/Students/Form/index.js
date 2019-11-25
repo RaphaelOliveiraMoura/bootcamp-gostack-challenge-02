@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { Form } from '@rocketseat/unform';
+import { toast } from 'react-toastify';
 
 import {
   Container,
@@ -22,9 +23,16 @@ const schema = Yup.object().shape({
   email: Yup.string()
     .email('Insira um e-mail válido')
     .required('Insira um e-mail'),
-  birth: Yup.date().required('A idade é obrigatória'),
-  weigth: Yup.number().required('O peso é obrigatório'),
-  height: Yup.number().required('A altura é obrigatória'),
+  birth: Yup.date()
+    .typeError('Utilize o formato correto para a data')
+    .max(new Date(), 'Não é possível escolher uma data futura')
+    .required('A idade é obrigatória'),
+  weigth: Yup.number()
+    .typeError('O peso deve conter um valor numérico')
+    .required('O peso é obrigatório'),
+  height: Yup.number()
+    .typeError('A idade deve conter um valor numérico')
+    .required('A altura é obrigatória'),
 });
 
 export default function FormStudents({ match }) {
@@ -49,12 +57,28 @@ export default function FormStudents({ match }) {
 
   async function handleSubmit({ name, email, birth, weigth, height }) {
     if (id) {
-      await api.put(`/students/${id}`, { name, email, birth, weigth, height });
+      try {
+        await api.put(`/students/${id}`, {
+          name,
+          email,
+          birth,
+          weigth,
+          height,
+        });
+        toast.success('Dados do aluno atualizados com sucesso');
+        history.push('/students');
+      } catch (error) {
+        toast.error('Error ao atualizar dados do aluno');
+      }
     } else {
-      await api.post(`/students`, { name, email, birth, weigth, height });
+      try {
+        await api.post(`/students`, { name, email, birth, weigth, height });
+        toast.success('Aluno cadastrado');
+        history.push('/students');
+      } catch (error) {
+        toast.error('Error ao cadastrar aluno');
+      }
     }
-
-    history.push('/students');
   }
 
   return (

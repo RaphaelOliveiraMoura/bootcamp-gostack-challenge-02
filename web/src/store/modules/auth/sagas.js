@@ -1,4 +1,5 @@
 import { all, takeLatest, call, put } from 'redux-saga/effects';
+import { toast } from 'react-toastify';
 
 import { signInSuccess } from './actions';
 
@@ -17,17 +18,21 @@ export function setToken({ payload }) {
 }
 
 export function* signIn({ payload }) {
-  const { email, password } = payload;
+  try {
+    const { email, password } = payload;
 
-  const response = yield call(api.post, '/sessions', { email, password });
+    const response = yield call(api.post, '/sessions', { email, password });
 
-  const { token, user } = response.data;
+    const { token, user } = response.data;
 
-  api.defaults.headers.Authorization = `Bearer ${token}`;
+    api.defaults.headers.Authorization = `Bearer ${token}`;
 
-  yield put(signInSuccess(token, user));
+    yield put(signInSuccess(token, user));
 
-  history.push('/students');
+    history.push('/students');
+  } catch (error) {
+    toast.error('Credenciais inválidas, verifique seus dados!');
+  }
 }
 
 export function singOut() {
