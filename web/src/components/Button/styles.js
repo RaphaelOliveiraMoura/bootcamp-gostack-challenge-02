@@ -4,9 +4,9 @@ import { darken } from 'polished';
 
 export const Container = styled.button`
   background: ${props => props.background || '#ee4d64'};
-  color: #fff;
+  color: ${props => props.color || '#fff'};
   font-weight: bold;
-  font-size: 16px;
+  font-size: ${props => props.fontSize || '16px'};
   border-radius: 4px;
   padding: 10px 16px;
   transition: background 0.3s;

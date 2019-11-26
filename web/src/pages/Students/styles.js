@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import TableWrapper from '~/components/Table';
+import TitleContainer from '~/components/TitleContainer';
 
 export const Container = styled.div`
   margin: 30px auto;
@@ -10,17 +11,7 @@ export const Container = styled.div`
   padding: 0 8px;
 `;
 
-export const ContentHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  h1 {
-    font-size: 24px;
-    color: #444;
-    font-weight: bold;
-  }
-
+export const ContentHeader = styled(TitleContainer)`
   .options {
     display: flex;
     align-items: center;
@@ -51,59 +42,35 @@ export const FilterInput = styled(Input)`
 `;
 
 export const Table = styled(TableWrapper)`
-  margin-top: 24px;
-  text-align: left;
-
-  .options {
-    text-align: center;
-    display: flex;
-    justify-content: space-evenly;
-  }
-
   @media (max-width: 660px) {
-    thead {
-      tr {
-        th:nth-child(3) {
-          display: none;
-        }
-      }
-    }
-
-    tbody {
-      tr {
-        td:nth-child(3) {
-          display: none;
-        }
-      }
+    th:nth-child(3),
+    td:nth-child(3) {
+      display: none;
     }
   }
 
   @media (max-width: 620px) {
-    thead {
-      tr {
-        th:nth-child(1) {
-          display: none;
-        }
-      }
-    }
-    tbody {
-      tr {
-        td:nth-child(1) {
-          display: none;
-        }
-      }
+    th:nth-child(1),
+    td:nth-child(1) {
+      display: none;
     }
   }
 `;
 
-export const EditButton = styled.button`
+export const EditButton = styled(Button).attrs({
+  background: '#fff',
+})`
   font-size: 15px;
   color: #4d85ee;
+  font-weight: normal;
 `;
 
-export const DeleteButton = styled.button`
+export const DeleteButton = styled(Button).attrs({
+  background: '#fff',
+})`
   font-size: 15px;
   color: #de3b3b;
+  font-weight: normal;
 `;
 
 export const EmptyContainer = styled.div`

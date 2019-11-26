@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const Table = styled.table`
+  margin-top: 24px;
+  text-align: left;
   width: 100%;
   background: #fff;
   padding: 30px;
@@ -17,6 +19,12 @@ const Table = styled.table`
   }
 
   tbody {
+    .options {
+      text-align: center;
+      display: flex;
+      justify-content: space-evenly;
+    }
+
     tr {
       td {
         font-size: 16px;
