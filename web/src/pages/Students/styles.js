@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import Button from '~/components/Button';
 import Input from '~/components/Input';
+import TableWrapper from '~/components/Table';
 
 export const Container = styled.div`
   margin: 30px auto;
@@ -49,48 +50,14 @@ export const FilterInput = styled(Input)`
   width: 240px;
 `;
 
-export const Table = styled.table`
-  width: 100%;
+export const Table = styled(TableWrapper)`
   margin-top: 24px;
-  background: #fff;
-  padding: 30px;
   text-align: left;
-  border-radius: 4px;
 
-  thead {
-    tr {
-      th {
-        font-size: 16px;
-        font-weight: bold;
-        color: #444;
-      }
-    }
-  }
-
-  tbody {
-    tr {
-      td {
-        font-size: 16px;
-        color: #666;
-        padding-top: 16px;
-        padding-bottom: 16px;
-        margin-bottom: 16px;
-        border-bottom: 1px solid #eee;
-
-        .options {
-          text-align: center;
-          display: flex;
-          justify-content: space-evenly;
-        }
-      }
-
-      &:last-child {
-        td {
-          border-bottom: none;
-          padding-bottom: 0;
-        }
-      }
-    }
+  .options {
+    text-align: center;
+    display: flex;
+    justify-content: space-evenly;
   }
 
   @media (max-width: 660px) {
@@ -147,6 +114,6 @@ export const EmptyContainer = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 28px;
-  color: #ddd
+  color: #ddd;
   border-radius: 4px;
 `;

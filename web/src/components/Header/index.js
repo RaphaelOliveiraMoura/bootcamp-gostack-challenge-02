@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Container, Left, Option, Rigth } from './styles';
+import { Container, Left, Link, Option, Rigth } from './styles';
 
 import logo from '~/assets/logo.svg';
 
@@ -23,10 +23,18 @@ export default function Header() {
         <span>GYMPOINT</span>
 
         <ul>
-          <Option active>ALUNOS</Option>
-          <Option>PLANOS</Option>
-          <Option>MATRÍCULAS</Option>
-          <Option>PEDIDOS DE AUXÍLIO</Option>
+          <Link to="/students">
+            <Option active>ALUNOS</Option>
+          </Link>
+          <Link to="/plans">
+            <Option>PLANOS</Option>
+          </Link>
+          <Link to="/enrolments">
+            <Option>MATRÍCULAS</Option>
+          </Link>
+          <Link to="/help-orders">
+            <Option>PEDIDOS DE AUXÍLIO</Option>
+          </Link>
         </ul>
       </Left>
       <Rigth>

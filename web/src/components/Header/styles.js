@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link as LinkWrapper } from 'react-router-dom';
 
 import { darken } from 'polished';
 
@@ -70,27 +71,30 @@ export const Left = styled.div`
   }
 `;
 
+export const Link = styled(LinkWrapper)`
+  cursor: pointer;
+
+  & + a {
+    margin-left: 20px;
+  }
+
+  @media (max-width: 600px) {
+    & + a {
+      margin-left: 0px;
+      margin-top: 6px;
+    }
+  }
+`;
+
 export const Option = styled.li`
   color: ${props => (props.active ? '#444' : '#999999')};
   font-size: 15px;
-  cursor: pointer;
   font-weight: bold;
   transition: color 0.6s;
   text-align: center;
 
-  & + li {
-    margin-left: 20px;
-  }
-
   &:hover {
     color: ${props => (props.active ? '#444' : darken(0.3, '#999999'))};
-  }
-
-  @media (max-width: 600px) {
-    & + li {
-      margin-left: 0px;
-      margin-top: 6px;
-    }
   }
 `;
 

@@ -48,6 +48,8 @@ export default function Students() {
 
   async function handleDelete(id) {
     try {
+      // eslint-disable-next-line no-alert
+      if (!window.confirm('Tem certeza que deseja apagar esse aluno?')) return;
       await api.delete(`/students/${id}`);
       setStudents(students.filter(student => student.id !== id));
       toast.success('Aluno deletado com sucesso');
