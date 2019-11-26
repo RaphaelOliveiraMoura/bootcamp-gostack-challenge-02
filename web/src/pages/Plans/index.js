@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { formatDistanceStrict, addMonths } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import { Container, Table, EditButton, DeleteButton } from './styles';
 
@@ -19,6 +21,11 @@ export default function Plans() {
 
       const data = response.data.map(plan => ({
         ...plan,
+        formattedDuration: formatDistanceStrict(
+          addMonths(new Date(), plan.duration),
+          new Date(),
+          { locale: pt, unit: 'month' }
+        ),
         formattedPrice: formatPrice(plan.price),
       }));
 
@@ -48,7 +55,7 @@ export default function Plans() {
           {plans.map(plan => (
             <tr key={String(plan.id)}>
               <td>{plan.title}</td>
-              <td>{plan.duration}</td>
+              <td>{plan.formattedDuration}</td>
               <td>{plan.formattedPrice}</td>
               <td>
                 <div className="options">
