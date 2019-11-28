@@ -58,6 +58,7 @@ routes.delete('/students/:id', StudentController.destroy);
 
 /** Plan */
 routes.get('/plans', PlanController.index);
+routes.get('/plans/:id', PlanController.show);
 routes.post('/plans', PlanValidator.store, PlanController.store);
 routes.put('/plans/:id', PlanValidator.update, PlanController.update);
 routes.delete('/plans/:id', PlanValidator.delete, PlanController.delete);

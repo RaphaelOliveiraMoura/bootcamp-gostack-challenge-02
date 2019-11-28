@@ -6,6 +6,11 @@ class PlanController {
     return response.json(plans);
   }
 
+  async show(request, response) {
+    const plans = await Plan.findByPk(request.params.id);
+    return response.json(plans);
+  }
+
   async store(request, response) {
     const plan = await Plan.create(request.body);
     return response.json(plan);
