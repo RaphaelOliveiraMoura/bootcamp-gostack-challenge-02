@@ -9,6 +9,7 @@ import ListStudents from '~/pages/Students';
 import FormStudents from '~/pages/Students/Form';
 
 import ListPlans from '~/pages/Plans';
+import FormPlans from '~/pages/Plans/Form';
 
 export default function Routes() {
   return (
@@ -19,7 +20,9 @@ export default function Routes() {
       <Route path="/students/create" component={FormStudents} isPrivate />
       <Route path="/students/:id" component={FormStudents} isPrivate />
 
-      <Route path="/plans" component={ListPlans} isPrivate />
+      <Route path="/plans" exact component={ListPlans} isPrivate />
+      <Route path="/plans/create" component={FormPlans} isPrivate />
+      <Route path="/plans/:id" component={FormPlans} isPrivate />
     </Switch>
   );
 }
