@@ -42,6 +42,11 @@ export const FilterInput = styled(Input)`
 `;
 
 export const Table = styled(TableWrapper)`
+  th:nth-child(2),
+  td:nth-child(2) {
+    text-align: left;
+  }
+
   @media (max-width: 660px) {
     th:nth-child(3),
     td:nth-child(3) {

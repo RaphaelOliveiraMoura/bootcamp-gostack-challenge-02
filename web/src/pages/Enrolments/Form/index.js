@@ -10,9 +10,11 @@ import {
   ContentHeader,
   Card,
   Input,
+  Select,
   BackButton,
   SaveButton,
 } from './styles';
+import DatePicker from '~/components/Input/DatePicker';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -26,6 +28,7 @@ const schema = Yup.object().shape({
     .required('Escolha um plano válido'),
   start_date: Yup.date()
     .typeError('Digite uma data')
+    .min(new Date())
     .required('Digite uma data válida'),
 });
 
@@ -33,11 +36,14 @@ export default function FormPlans({ match }) {
   const { id } = match.params;
 
   const [students, setStudents] = useState([]);
+  const [plans, setPlans] = useState([]);
   const [initialData, setInitialData] = useState({});
 
   useEffect(() => {
     async function loadEnrolmentInfo() {
       try {
+        const response = await api.get(`/enrolments/${id}`);
+        setInitialData(response.data);
       } catch (error) {
         history.push('/enrolments/create');
       }
@@ -52,22 +58,35 @@ export default function FormPlans({ match }) {
       setStudents(data);
     }
 
+    async function loadPlans() {
+      const response = await api.get('/plans');
+      const data = response.data.map(plan => ({
+        id: plan.id,
+        title: plan.title,
+      }));
+      setPlans(data);
+    }
+
     if (id) {
       loadEnrolmentInfo();
     } else {
       loadStudents();
+      loadPlans();
     }
   }, [id]);
 
-  async function handleSubmit() {
+  async function handleSubmit({ student_id, plan_id, start_date }) {
     if (id) {
       try {
+        await api.put(`/enrolments/${id}`, { student_id, plan_id, start_date });
+        toast.success('Matrícula atualizada com sucesso');
         history.push('/enrolments');
       } catch (error) {
         toast.error('Error ao atualizar dados da matrícula');
       }
     } else {
       try {
+        await api.post('/enrolments', { student_id, plan_id, start_date });
         toast.success('Matrícula realizada');
         history.push('/enrolments');
       } catch (error) {
@@ -91,9 +110,24 @@ export default function FormPlans({ match }) {
           </div>
         </ContentHeader>
         <Card>
-          <Input name="student_id" label="ALUNO" options={students} />
-          <Input name="plan_id" type="number" label="Selecione o plano" />
-          <Input name="start_date" label="DATA DE INÍCIO" />
+          <Select
+            name="student_id"
+            label="ALUNO"
+            placeholder="Buscar aluno"
+            options={students}
+          />
+          <Select
+            name="plan_id"
+            placeholder="Selecione o plano"
+            label="PLANO"
+            options={plans}
+          />
+          <DatePicker
+            name="start_date"
+            placeholder="Escolha a data"
+            label="DATA DE INÍCIO"
+            minDate={new Date()}
+          />
           <Input name="end_date" label="DATA DE TÉRMINO" disabled />
           <Input name="end_value" label="VALOR FINAL" disabled />
         </Card>

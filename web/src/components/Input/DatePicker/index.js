@@ -52,7 +52,6 @@ export default function DatePicker({ className, name, label, ...rest }) {
         ref={ref}
         autoComplete="off"
         dateFormat="P"
-        maxDate={new Date()}
         {...rest}
       />
       {error && <p>{error}</p>}

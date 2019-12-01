@@ -10,13 +10,6 @@ export const Container = styled.div`
 `;
 
 export const Table = styled(TableWrapper)`
-  text-align: center;
-
-  th:nth-child(1),
-  td:nth-child(1) {
-    text-align: left;
-  }
-
   @media (max-width: 600px) {
     th:nth-child(2),
     td:nth-child(2) {

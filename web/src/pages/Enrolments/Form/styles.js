@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import Button from '~/components/Button';
 import InputWrapper from '~/components/Input';
+import SelectWrapper from '~/components/Input/Select';
 import TitleContainer from '~/components/TitleContainer';
 
 export const Container = styled.div`
@@ -26,15 +27,17 @@ export const Card = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 16px;
   grid-row-gap: 20px;
+
+  div:nth-child(1) {
+    grid-column: 1 / 5;
+  }
 `;
 
 export const Input = styled(InputWrapper)`
   overflow: hidden;
-
-  &:nth-child(1) {
-    grid-column: 1 / 5;
-  }
 `;
+
+export const Select = styled(SelectWrapper)``;
 
 export const BackButton = styled(Button)`
   font-size: 14px;

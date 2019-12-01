@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { parseISO, format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import { Container, Table, EditButton, DeleteButton } from './styles';
 import TitleContainer from '~/components/TitleContainer';
@@ -14,7 +16,20 @@ export default function Enrolments() {
   useEffect(() => {
     async function loadEnrolments() {
       const response = await api.get('/enrolments');
-      setEnrolments(response.data);
+      const data = response.data.map(enrolment => ({
+        ...enrolment,
+        formatted_start_date: format(
+          parseISO(enrolment.start_date),
+          "dd 'de' MMMM 'de' yyyy",
+          { locale: pt }
+        ),
+        formatted_end_date: format(
+          parseISO(enrolment.end_date),
+          "dd 'de' MMMM 'de' yyyy",
+          { locale: pt }
+        ),
+      }));
+      setEnrolments(data);
     }
 
     loadEnrolments();
@@ -42,9 +57,11 @@ export default function Enrolments() {
         <tbody>
           {enrolments.map(enrolment => (
             <tr key={String(enrolment.id)}>
-              <td>{enrolment.title}</td>
-              <td>{enrolment.formattedDuration}</td>
-              <td>{enrolment.formattedPrice}</td>
+              <td>{enrolment.student.name}</td>
+              <td>{enrolment.plan.title}</td>
+              <td>{enrolment.formatted_start_date}</td>
+              <td>{enrolment.formatted_end_date}</td>
+              <td>{enrolment.active ? 'Ativa' : 'Inativa'}</td>
               <td>
                 <div className="options">
                   <EditButton
