@@ -42,4 +42,8 @@ export default createGlobalStyle`
     background: none;
     border: 0;
   }
+
+  .react-confirm-alert-overlay {
+    background: rgba(0,0,0,0.8) !important;
+  }
 `;

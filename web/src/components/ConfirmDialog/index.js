@@ -1,51 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
-import { Container, Content, Options } from './styles';
+import { Container } from './styles';
 
 import Button from '~/components/Button';
 
 export default function ConfirmDialog({
-  title,
-  description,
-  onConfirm,
-  opened,
+  title = 'Tem certeza disso ?',
+  description = null,
+  component = null,
+  onConfirm = () => {},
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    setIsOpen(opened);
-  }, [opened]);
-
-  return (
-    <>
-      {isOpen && (
+  return confirmAlert({
+    // eslint-disable-next-line react/prop-types
+    customUI: ({ onClose }) => {
+      return (
         <Container>
-          <Content>
-            <h1>{title}</h1>
-            {description && <p>{description}</p>}
-            <Options>
-              <Button onClick={() => setIsOpen(false)} background="#ccc">
-                CANCELAR
-              </Button>
-              <Button onClick={() => onConfirm()}>CONFIRMAR</Button>
-            </Options>
-          </Content>
+          <h1>{title}</h1>
+          {description && <p>{description}</p>}
+          {component && <section>{component}</section>}
+          <div>
+            <Button background="#ccc" onClick={onClose}>
+              Cancelar
+            </Button>
+            <Button
+              onClick={() => {
+                onClose();
+                onConfirm();
+              }}
+            >
+              Confirmar
+            </Button>
+          </div>
         </Container>
-      )}
-    </>
-  );
+      );
+    },
+  });
 }
-
-ConfirmDialog.propTypes = {
-  title: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  onConfirm: PropTypes.func,
-  opened: PropTypes.bool,
-};
-
-ConfirmDialog.defaultProps = {
-  description: null,
-  opened: false,
-  onConfirm: () => {},
-};

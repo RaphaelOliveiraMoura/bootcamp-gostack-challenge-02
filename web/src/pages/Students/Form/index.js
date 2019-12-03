@@ -29,9 +29,11 @@ const schema = Yup.object().shape({
     .max(new Date(), 'Não é possível escolher uma data futura')
     .required('A idade é obrigatória'),
   weigth: Yup.number()
+    .min(1, 'Digite uma idade válida')
     .typeError('O peso deve conter um valor numérico')
     .required('O peso é obrigatório'),
   height: Yup.number()
+    .min(1, 'Digite uma altura válida')
     .typeError('A idade deve conter um valor numérico')
     .required('A altura é obrigatória'),
 });
@@ -111,7 +113,6 @@ export default function FormStudents({ match }) {
           <DatePicker
             name="birth"
             label="DATA NASCIMENTO"
-            placeholderText="dd/mm/yyyy"
             maxDate={new Date()}
           />
           <Input name="weigth" type="number" label="PESO (em kg)" />

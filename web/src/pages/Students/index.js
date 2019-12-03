@@ -27,9 +27,6 @@ export default function Students() {
   const [pages, setPages] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogParams, setDialogParams] = useState({});
-
   useEffect(() => {
     async function loadStudents() {
       const response = await api.get('/students', {
@@ -50,21 +47,28 @@ export default function Students() {
     setFilter(filterForm);
   }
 
-  async function deleteUser({ id }) {
-    try {
-      await api.delete(`/students/${id}`);
-      setStudents(students.filter(student => student.id !== id));
-      toast.success('Aluno deletado com sucesso');
-    } catch (error) {
-      toast.error('Erro ao deletar aluno');
-    }
-  }
-
   async function handleDelete(student) {
-    setDialogOpen(true);
-    setDialogParams({
-      student,
-      description: `Tem certeza que deseja apagar o aluno ${student.name} ?`,
+    async function deleteUser() {
+      try {
+        await api.delete(`/students/${student.id}`);
+        setStudents(
+          students.filter(currentStudent => currentStudent.id !== student.id)
+        );
+        toast.success('Aluno deletado com sucesso');
+      } catch (error) {
+        toast.error('Erro ao deletar aluno');
+      }
+    }
+
+    ConfirmDialog({
+      title: 'Apagar aluno',
+      onConfirm: deleteUser,
+      component: (
+        <p>
+          Tem certeza que deseja apagar o aluno <strong>{student.name} </strong>
+          ?
+        </p>
+      ),
     });
   }
 
@@ -118,12 +122,6 @@ export default function Students() {
               ))}
             </tbody>
           </Table>
-          <ConfirmDialog
-            opened={dialogOpen}
-            title="Apagar aluno"
-            onConfirm={deleteUser}
-            onConfirmParams={dialogParams}
-          />
           <Pagination
             pages={pages}
             currentPage={currentPage}

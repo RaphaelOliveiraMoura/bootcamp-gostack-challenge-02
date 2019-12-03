@@ -2,11 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDistanceStrict, addMonths } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import { toast } from 'react-toastify';
 
-import { Container, Table, EditButton, DeleteButton } from './styles';
+import {
+  Container,
+  Table,
+  EditButton,
+  DeleteButton,
+  EmptyContainer,
+} from './styles';
 
 import Button from '~/components/Button';
 import TitleContainer from '~/components/TitleContainer';
+import ConfirmDialog from '~/components/ConfirmDialog';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -35,6 +43,28 @@ export default function Plans() {
     loadPlans();
   }, []);
 
+  async function handleDelete(plan) {
+    async function deletePlan() {
+      try {
+        await api.delete(`/plans/${plan.id}`);
+        setPlans(plans.filter(currentPlan => currentPlan.id !== plan.id));
+        toast.success('Plano deletado com sucesso');
+      } catch (error) {
+        toast.error('Erro ao deletar plano');
+      }
+    }
+
+    ConfirmDialog({
+      title: 'Apagar plano',
+      onConfirm: deletePlan,
+      component: (
+        <p>
+          Tem certeza que deseja apagar o plano <strong>{plan.title} </strong>?
+        </p>
+      ),
+    });
+  }
+
   return (
     <Container>
       <TitleContainer>
@@ -43,36 +73,47 @@ export default function Plans() {
           <Button>CADASTRAR</Button>
         </Link>
       </TitleContainer>
-      <Table>
-        <thead>
-          <tr>
-            <th>TÍTULO</th>
-            <th>DURAÇÃO</th>
-            <th>VALOR p/MÊS</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          {plans.map(plan => (
-            <tr key={String(plan.id)}>
-              <td>{plan.title}</td>
-              <td>{plan.formattedDuration}</td>
-              <td>{plan.formattedPrice}</td>
-              <td>
-                <div className="options">
-                  <EditButton
-                    type="button"
-                    onClick={() => history.push(`/plans/${plan.id}`)}
-                  >
-                    editar
-                  </EditButton>
-                  <DeleteButton type="button">apagar</DeleteButton>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      {plans.length > 0 ? (
+        <>
+          <Table>
+            <thead>
+              <tr>
+                <th>TÍTULO</th>
+                <th>DURAÇÃO</th>
+                <th>VALOR p/MÊS</th>
+                <th> </th>
+              </tr>
+            </thead>
+            <tbody>
+              {plans.map(plan => (
+                <tr key={String(plan.id)}>
+                  <td>{plan.title}</td>
+                  <td>{plan.formattedDuration}</td>
+                  <td>{plan.formattedPrice}</td>
+                  <td>
+                    <div className="options">
+                      <EditButton
+                        type="button"
+                        onClick={() => history.push(`/plans/${plan.id}`)}
+                      >
+                        editar
+                      </EditButton>
+                      <DeleteButton
+                        type="button"
+                        onClick={() => handleDelete(plan)}
+                      >
+                        apagar
+                      </DeleteButton>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>{' '}
+        </>
+      ) : (
+        <EmptyContainer>Nenhum plano encontrado</EmptyContainer>
+      )}
     </Container>
   );
 }

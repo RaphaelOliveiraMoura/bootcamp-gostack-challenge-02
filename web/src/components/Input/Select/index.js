@@ -6,23 +6,13 @@ import { useField } from '@rocketseat/unform';
 
 import { Container } from './styles';
 
-export default function ReactSelect({
-  name,
-  label,
-  options,
-  multiple,
-  ...rest
-}) {
+export default function ReactSelect({ name, label, options, ...rest }) {
   const ref = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
   function parseSelectValue(selectRef) {
     const selectValue = selectRef.state.value;
-    if (!multiple) {
-      return selectValue ? selectValue.id : '';
-    }
-
-    return selectValue ? selectValue.map(option => option.id) : [];
+    return selectValue ? selectValue.id : '';
   }
 
   useEffect(() => {
@@ -39,12 +29,7 @@ export default function ReactSelect({
 
   function getDefaultValue() {
     if (!defaultValue) return null;
-
-    if (!multiple) {
-      return options.find(option => option.id === defaultValue);
-    }
-
-    return options.filter(option => defaultValue.includes(option.id));
+    return options.find(option => option.id === defaultValue);
   }
 
   return (
@@ -55,7 +40,7 @@ export default function ReactSelect({
         name={fieldName}
         aria-label={fieldName}
         options={options}
-        isMulti={multiple}
+        isMulti={false}
         defaultValue={getDefaultValue()}
         ref={ref}
         getOptionValue={option => option.id}
