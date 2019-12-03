@@ -58,7 +58,7 @@ class PlanValidator {
 
   async delete(request, response, next) {
     const planExists = await Plan.findOne({
-      where: { title: request.body.title },
+      where: { id: request.params.id },
     });
 
     if (!planExists) {
