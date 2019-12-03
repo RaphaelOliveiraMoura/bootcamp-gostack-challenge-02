@@ -14,12 +14,15 @@ import {
   SaveButton,
 } from './styles';
 
+import CurrencyInput from '~/components/Input/Currency';
+
 import api from '~/services/api';
 import history from '~/services/history';
 
 const schema = Yup.object().shape({
   title: Yup.string().required('Digite um título'),
   duration: Yup.number()
+    .min(1, 'Digite uma duração válida')
     .typeError('Digite uma duração')
     .required('Insira uma duração'),
   price: Yup.number()
@@ -34,10 +37,13 @@ export default function FormPlans({ match }) {
 
   const [duration, setDuration] = useState(0);
   const [price, setPrice] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    setTotalPrice(Number(duration) * Number(price));
+    setInitialData({
+      ...initialData,
+      totalPrice: Number(duration) * Number(price),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [duration, price]);
 
   useEffect(() => {
@@ -46,9 +52,13 @@ export default function FormPlans({ match }) {
         const response = await api.get(`/plans/${id}`);
         const { data } = response;
 
-        setDuration(data.duration);
+        setInitialData({
+          ...data,
+          totalPrice: Number(data.duration) * Number(data.price),
+        });
+
         setPrice(data.price);
-        setInitialData(data);
+        setDuration(data.duration);
       } catch (error) {
         history.push('/plans/create');
       }
@@ -85,7 +95,7 @@ export default function FormPlans({ match }) {
         schema={schema}
         onSubmit={handleSubmit}
         initialData={initialData}
-        context={{ price, duration, totalPrice }}
+        context={{ duration, price }}
       >
         <ContentHeader>
           <h1>{id ? 'Edição de plano' : 'Cadastro de plano'}</h1>
@@ -105,25 +115,13 @@ export default function FormPlans({ match }) {
             type="number"
             label="DURAÇÃO (em meses)"
             onChange={e => setDuration(e.target.value)}
-            value={duration}
           />
-          <Input
+          <CurrencyInput
             name="price"
-            type="number"
-            step="0.01"
             label="PREÇO MENSAL"
-            onChange={e => setPrice(e.target.value)}
-            value={price}
+            onChange={value => setPrice(value)}
           />
-          <Input
-            name="totalPrice"
-            type="number"
-            step="0.01"
-            label="PREÇO TOTAL"
-            value={totalPrice}
-            onChange={() => {}}
-            disabled
-          />
+          <CurrencyInput name="totalPrice" label="PREÇO TOTAL" disabled />
         </Card>
       </Form>
     </Container>
