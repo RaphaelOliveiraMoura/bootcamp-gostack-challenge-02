@@ -112,6 +112,7 @@ export default function FormStudents({ match }) {
             name="birth"
             label="DATA NASCIMENTO"
             placeholderText="dd/mm/yyyy"
+            maxDate={new Date()}
           />
           <Input name="weigth" type="number" label="PESO (em kg)" />
           <Input name="height" type="number" step="0.01" label="ALTURA" />

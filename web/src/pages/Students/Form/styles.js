@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import Button from '~/components/Button';
 import InputWrapper from '~/components/Input';
-import DatePickerWrapper from '~/components/DatePicker';
+import DatePickerWrapper from '~/components/Input/DatePicker';
 
 export const Container = styled.div`
   margin: 30px auto;

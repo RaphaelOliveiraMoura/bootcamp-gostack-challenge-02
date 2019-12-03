@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link as LinkWrapper } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { darken } from 'polished';
 
@@ -71,8 +71,22 @@ export const Left = styled.div`
   }
 `;
 
-export const Link = styled(LinkWrapper)`
+export const Link = styled(NavLink).attrs({
+  strict: true,
+  activeStyle: {
+    color: '#444',
+  },
+})`
   cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  transition: color 0.6s;
+  text-align: center;
+  color: #999;
+
+  &:hover {
+    color: ${props => (props.active ? '#444' : darken(0.3, '#999999'))};
+  }
 
   & + a {
     margin-left: 20px;
@@ -83,18 +97,6 @@ export const Link = styled(LinkWrapper)`
       margin-left: 0px;
       margin-top: 6px;
     }
-  }
-`;
-
-export const Option = styled.li`
-  color: ${props => (props.active ? '#444' : '#999999')};
-  font-size: 15px;
-  font-weight: bold;
-  transition: color 0.6s;
-  text-align: center;
-
-  &:hover {
-    color: ${props => (props.active ? '#444' : darken(0.3, '#999999'))};
   }
 `;
 

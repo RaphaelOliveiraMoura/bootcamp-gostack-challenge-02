@@ -2,11 +2,16 @@ import styled from 'styled-components';
 
 const Table = styled.table`
   margin-top: 24px;
-  text-align: left;
   width: 100%;
   background: #fff;
   padding: 30px;
   border-radius: 4px;
+  text-align: center;
+
+  th:nth-child(1),
+  td:nth-child(1) {
+    text-align: left;
+  }
 
   thead {
     tr {
