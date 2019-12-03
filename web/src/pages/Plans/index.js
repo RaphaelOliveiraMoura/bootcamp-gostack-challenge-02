@@ -109,7 +109,7 @@ export default function Plans() {
                 </tr>
               ))}
             </tbody>
-          </Table>{' '}
+          </Table>
         </>
       ) : (
         <EmptyContainer>Nenhum plano encontrado</EmptyContainer>

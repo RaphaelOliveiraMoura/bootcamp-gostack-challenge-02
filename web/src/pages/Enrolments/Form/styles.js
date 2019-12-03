@@ -31,6 +31,20 @@ export const Card = styled.div`
   div:nth-child(1) {
     grid-column: 1 / 5;
   }
+
+  @media (max-width: 820px) {
+    & {
+      grid-template-columns: 1fr;
+
+      div:nth-child(1),
+      div:nth-child(2),
+      div:nth-child(3),
+      div:nth-child(4),
+      div:nth-child(5) {
+        grid-column: 1 / 2;
+      }
+    }
+  }
 `;
 
 export const Input = styled(InputWrapper)`
