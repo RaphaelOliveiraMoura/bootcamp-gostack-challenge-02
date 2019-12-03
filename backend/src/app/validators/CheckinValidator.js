@@ -1,7 +1,7 @@
 import { subDays } from 'date-fns';
 import { Op } from 'sequelize';
-import Checkin from '../models/Checkin';
-import Student from '../models/Student';
+import Checkin from '~/app/models/Checkin';
+import Student from '~/app/models/Student';
 
 class CheckinValidator {
   async index(request, response, next) {

@@ -1,9 +1,9 @@
 import * as Yup from 'yup';
 import { Op } from 'sequelize';
 import { addMonths, parseISO, startOfDay, isBefore } from 'date-fns';
-import Enrolment from '../models/Enrolment';
-import Plan from '../models/Plan';
-import Student from '../models/Student';
+import Enrolment from '~/app/models/Enrolment';
+import Plan from '~/app/models/Plan';
+import Student from '~/app/models/Student';
 
 class EnrolmentValidator {
   async store(request, response, next) {

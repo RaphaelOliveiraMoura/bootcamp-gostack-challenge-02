@@ -1,22 +1,22 @@
 import { Router } from 'express';
 
-import authMiddleware from './app/middlewares/auth';
+import authMiddleware from '~/app/middlewares/auth';
 
-import SessionController from './app/controllers/SessionController';
-import StudentController from './app/controllers/StudentController';
-import PlanController from './app/controllers/PlanController';
-import EnrolmentController from './app/controllers/EnrolmentController';
-import CheckinController from './app/controllers/CheckinController';
-import HelpOrderController from './app/controllers/HelpOrderController';
-import AnswerHelpOrderController from './app/controllers/AnswerHelpOrderController';
+import SessionController from '~/app/controllers/SessionController';
+import StudentController from '~/app/controllers/StudentController';
+import PlanController from '~/app/controllers/PlanController';
+import EnrolmentController from '~/app/controllers/EnrolmentController';
+import CheckinController from '~/app/controllers/CheckinController';
+import HelpOrderController from '~/app/controllers/HelpOrderController';
+import AnswerHelpOrderController from '~/app/controllers/AnswerHelpOrderController';
 
-import SessionValidator from './app/validators/SessionValidator';
-import StudentValidator from './app/validators/StudentValidator';
-import PlanValidator from './app/validators/PlanValidator';
-import EnrolmentValidator from './app/validators/EnrolmentValidator';
-import CheckinValidator from './app/validators/CheckinValidator';
-import HelpOrderValidator from './app/validators/HelpOrderValidator';
-import AnswerHelpOrderValidator from './app/validators/AnswerHelpOrderValidator';
+import SessionValidator from '~/app/validators/SessionValidator';
+import StudentValidator from '~/app/validators/StudentValidator';
+import PlanValidator from '~/app/validators/PlanValidator';
+import EnrolmentValidator from '~/app/validators/EnrolmentValidator';
+import CheckinValidator from '~/app/validators/CheckinValidator';
+import HelpOrderValidator from '~/app/validators/HelpOrderValidator';
+import AnswerHelpOrderValidator from '~/app/validators/AnswerHelpOrderValidator';
 
 const routes = new Router();
 

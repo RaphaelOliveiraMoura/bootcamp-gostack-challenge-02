@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
 import * as Yup from 'yup';
 
-import Student from '../models/Student';
+import Student from '~/app/models/Student';
 
 class StudentValidator {
   async store(request, response, next) {

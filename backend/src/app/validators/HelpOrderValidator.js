@@ -1,4 +1,4 @@
-import Student from '../models/Student';
+import Student from '~/app/models/Student';
 
 class HelpOrderValidator {
   async index(request, response, next) {

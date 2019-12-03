@@ -1,4 +1,4 @@
-import Checkin from '../models/Checkin';
+import Checkin from '~/app/models/Checkin';
 
 class CheckinController {
   async index(request, response) {

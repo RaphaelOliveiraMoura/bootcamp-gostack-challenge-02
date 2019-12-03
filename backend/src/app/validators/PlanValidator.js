@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import Plan from '../models/Plan';
+import Plan from '~/app/models/Plan';
 
 class PlanValidator {
   async store(request, response, next) {

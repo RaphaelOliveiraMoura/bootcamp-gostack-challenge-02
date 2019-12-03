@@ -1,6 +1,6 @@
-import Queue from '../../lib/Queue';
-import EnrolmentMail from '../jobs/EnrolmentMail';
-import Enrolment from '../models/Enrolment';
+import Queue from '~/lib/Queue';
+import EnrolmentMail from '~/app/jobs/EnrolmentMail';
+import Enrolment from '~/app/models/Enrolment';
 
 class EnrolmentController {
   async index(request, response) {

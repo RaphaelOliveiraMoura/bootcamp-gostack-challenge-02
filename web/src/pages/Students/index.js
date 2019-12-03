@@ -14,6 +14,7 @@ import {
   EmptyContainer,
 } from './styles';
 
+import ConfirmDialog from '~/components/ConfirmDialog';
 import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
@@ -25,6 +26,9 @@ export default function Students() {
   const [filter, setFilter] = useState('');
   const [pages, setPages] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogParams, setDialogParams] = useState({});
 
   useEffect(() => {
     async function loadStudents() {
@@ -46,16 +50,22 @@ export default function Students() {
     setFilter(filterForm);
   }
 
-  async function handleDelete(id) {
+  async function deleteUser({ id }) {
     try {
-      // eslint-disable-next-line no-alert
-      if (!window.confirm('Tem certeza que deseja apagar esse aluno?')) return;
       await api.delete(`/students/${id}`);
       setStudents(students.filter(student => student.id !== id));
       toast.success('Aluno deletado com sucesso');
     } catch (error) {
       toast.error('Erro ao deletar aluno');
     }
+  }
+
+  async function handleDelete(student) {
+    setDialogOpen(true);
+    setDialogParams({
+      student,
+      description: `Tem certeza que deseja apagar o aluno ${student.name} ?`,
+    });
   }
 
   return (
@@ -98,7 +108,7 @@ export default function Students() {
                       </EditButton>
                       <DeleteButton
                         type="button"
-                        onClick={() => handleDelete(student.id)}
+                        onClick={() => handleDelete(student)}
                       >
                         apagar
                       </DeleteButton>
@@ -108,6 +118,12 @@ export default function Students() {
               ))}
             </tbody>
           </Table>
+          <ConfirmDialog
+            opened={dialogOpen}
+            title="Apagar aluno"
+            onConfirm={deleteUser}
+            onConfirmParams={dialogParams}
+          />
           <Pagination
             pages={pages}
             currentPage={currentPage}

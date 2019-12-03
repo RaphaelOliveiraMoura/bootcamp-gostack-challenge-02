@@ -1,4 +1,4 @@
-import HelpOrder from '../models/HelpOrder';
+import HelpOrder from '~/app/models/HelpOrder';
 
 class HelpOrderController {
   async index(request, response) {

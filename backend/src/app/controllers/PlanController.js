@@ -1,4 +1,4 @@
-import Plan from '../models/Plan';
+import Plan from '~/app/models/Plan';
 
 class PlanController {
   async index(_request, response) {

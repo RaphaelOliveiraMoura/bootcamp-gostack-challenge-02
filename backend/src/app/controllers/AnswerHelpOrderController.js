@@ -1,6 +1,6 @@
-import Queue from '../../lib/Queue';
-import AnswerHelpOrderMail from '../jobs/AnswerHelpOrderMail';
-import HelpOrder from '../models/HelpOrder';
+import Queue from '~/lib/Queue';
+import AnswerHelpOrderMail from '~/app/jobs/AnswerHelpOrderMail';
+import HelpOrder from '~/app/models/HelpOrder';
 
 class AnswerHelpOrderController {
   async index(request, response) {
