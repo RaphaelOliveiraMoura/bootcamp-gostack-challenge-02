@@ -12,7 +12,13 @@ import { Container } from './styles';
 
 setDefaultLocale(pt);
 
-export default function DatePicker({ className, name, label, ...rest }) {
+export default function DatePicker({
+  className,
+  name,
+  label,
+  onChange,
+  ...rest
+}) {
   const { defaultValue, registerField, fieldName, error } = useField(name);
 
   const [selected, setSelected] = useState(defaultValue);
@@ -48,7 +54,10 @@ export default function DatePicker({ className, name, label, ...rest }) {
         }
         name={fieldName}
         selected={selected}
-        onChange={date => setSelected(date)}
+        onChange={date => {
+          setSelected(date);
+          onChange(date);
+        }}
         ref={ref}
         autoComplete="off"
         dateFormat="P"
@@ -63,9 +72,11 @@ DatePicker.propTypes = {
   name: PropTypes.string.isRequired,
   className: PropTypes.string,
   label: PropTypes.string,
+  onChange: PropTypes.func,
 };
 
 DatePicker.defaultProps = {
   className: null,
   label: null,
+  onChange: () => {},
 };

@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { parseISO, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import { toast } from 'react-toastify';
 
-import { Container, Table, EditButton, DeleteButton } from './styles';
+import {
+  Container,
+  Table,
+  EditButton,
+  DeleteButton,
+  EmptyContainer,
+} from './styles';
 import TitleContainer from '~/components/TitleContainer';
 import Button from '~/components/Button';
+import ConfirmDialog from '~/components/ConfirmDialog';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -35,6 +43,33 @@ export default function Enrolments() {
     loadEnrolments();
   }, []);
 
+  async function handleDelete(enrolment) {
+    async function deleteEnrolment() {
+      try {
+        await api.delete(`/enrolments/${enrolment.id}`);
+        setEnrolments(
+          enrolments.filter(
+            currentEnrolment => currentEnrolment.id !== enrolment.id
+          )
+        );
+        toast.success('Matrícula deletada com sucesso');
+      } catch (error) {
+        toast.error('Erro ao deletar matrícula');
+      }
+    }
+
+    ConfirmDialog({
+      title: 'Apagar matrícula',
+      onConfirm: deleteEnrolment,
+      component: (
+        <p>
+          Tem certeza que deseja apagar a matrícula do(a) aluno(a)&nbsp;
+          <strong>{enrolment.student.name} </strong>?
+        </p>
+      ),
+    });
+  }
+
   return (
     <Container>
       <TitleContainer>
@@ -43,40 +78,53 @@ export default function Enrolments() {
           <Button>CADASTRAR</Button>
         </Link>
       </TitleContainer>
-      <Table>
-        <thead>
-          <tr>
-            <th>ALUNO</th>
-            <th>PLANO</th>
-            <th>INÍCIO</th>
-            <th>TÉRMINO</th>
-            <th>ATIVA</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          {enrolments.map(enrolment => (
-            <tr key={String(enrolment.id)}>
-              <td>{enrolment.student.name}</td>
-              <td>{enrolment.plan.title}</td>
-              <td>{enrolment.formatted_start_date}</td>
-              <td>{enrolment.formatted_end_date}</td>
-              <td>{enrolment.active ? 'Ativa' : 'Inativa'}</td>
-              <td>
-                <div className="options">
-                  <EditButton
-                    type="button"
-                    onClick={() => history.push(`/enrolments/${enrolment.id}`)}
-                  >
-                    editar
-                  </EditButton>
-                  <DeleteButton type="button">apagar</DeleteButton>
-                </div>
-              </td>
+      {enrolments.length > 0 ? (
+        <Table>
+          <thead>
+            <tr>
+              <th>ALUNO</th>
+              <th>PLANO</th>
+              <th>INÍCIO</th>
+              <th>TÉRMINO</th>
+              <th>ATIVA</th>
+              <th> </th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {enrolments.map(enrolment => (
+              <tr key={String(enrolment.id)}>
+                <td>{enrolment.student.name}</td>
+                <td>
+                  {enrolment.plan ? enrolment.plan.title : 'Plano removido'}
+                </td>
+                <td>{enrolment.formatted_start_date}</td>
+                <td>{enrolment.formatted_end_date}</td>
+                <td>{enrolment.active ? 'Ativa' : 'Inativa'}</td>
+                <td>
+                  <div className="options">
+                    <EditButton
+                      type="button"
+                      onClick={() =>
+                        history.push(`/enrolments/${enrolment.id}`)
+                      }
+                    >
+                      editar
+                    </EditButton>
+                    <DeleteButton
+                      type="button"
+                      onClick={() => handleDelete(enrolment)}
+                    >
+                      apagar
+                    </DeleteButton>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      ) : (
+        <EmptyContainer>Nenhum aluno encontrado</EmptyContainer>
+      )}
     </Container>
   );
 }

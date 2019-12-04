@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { Form } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
+import { parseISO, addMonths } from 'date-fns';
 
 import {
   Container,
   ContentHeader,
   Card,
-  Input,
   Select,
   BackButton,
   SaveButton,
 } from './styles';
+
 import DatePicker from '~/components/Input/DatePicker';
+import CurrencyInput from '~/components/Input/Currency';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -39,43 +41,77 @@ export default function FormPlans({ match }) {
   const [plans, setPlans] = useState([]);
   const [initialData, setInitialData] = useState({});
 
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [start_date, setStartDate] = useState(null);
+
+  const loadStudents = useCallback(() => {
+    async function load() {
+      const response = await api.get('/students');
+      const data = response.data.map(student => ({
+        id: student.id,
+        title: student.name,
+        data: student,
+      }));
+      setStudents(data);
+    }
+
+    load();
+  }, []);
+
+  const loadPlans = useCallback(() => {
+    async function load() {
+      const response = await api.get('/plans');
+      const data = response.data.map(plan => ({
+        id: plan.id,
+        title: plan.title,
+        data: plan,
+      }));
+      setPlans(data);
+    }
+
+    load();
+  }, []);
+
   useEffect(() => {
-    async function loadEnrolmentInfo() {
+    async function loadEnrolment() {
       try {
         const response = await api.get(`/enrolments/${id}`);
-        setInitialData(response.data);
+
+        const { data } = response;
+
+        setInitialData({
+          student_id: data.student.id,
+          plan_id: data.plan.id,
+          start_date: parseISO(data.start_date),
+          end_date: addMonths(parseISO(data.start_date), data.plan.duration),
+          end_price: data.price,
+        });
       } catch (error) {
         history.push('/enrolments/create');
       }
     }
 
-    async function loadStudents() {
-      const response = await api.get('/students');
-      const data = response.data.map(student => ({
-        id: student.id,
-        title: student.name,
-      }));
-      setStudents(data);
-    }
-
-    async function loadPlans() {
-      const response = await api.get('/plans');
-      const data = response.data.map(plan => ({
-        id: plan.id,
-        title: plan.title,
-      }));
-      setPlans(data);
-    }
-
     if (id) {
-      loadEnrolmentInfo();
-    } else {
-      loadStudents();
-      loadPlans();
+      loadEnrolment();
     }
-  }, [id]);
 
-  async function handleSubmit({ student_id, plan_id, start_date }) {
+    loadStudents();
+    loadPlans();
+  }, [id, loadPlans, loadStudents]);
+
+  useEffect(() => {
+    if (selectedPlan && start_date) {
+      setInitialData({
+        ...initialData,
+        end_date: addMonths(start_date, selectedPlan.data.duration),
+        end_price:
+          Number(selectedPlan.data.price) * Number(selectedPlan.data.duration),
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedPlan, start_date]);
+
+  async function handleSubmit({ student_id, plan_id }) {
     if (id) {
       try {
         await api.put(`/enrolments/${id}`, { student_id, plan_id, start_date });
@@ -97,7 +133,12 @@ export default function FormPlans({ match }) {
 
   return (
     <Container>
-      <Form schema={schema} onSubmit={handleSubmit} initialData={initialData}>
+      <Form
+        schema={schema}
+        onSubmit={handleSubmit}
+        initialData={initialData}
+        context={{ start_date }}
+      >
         <ContentHeader>
           <h1>{id ? 'Edição de matrícula' : 'Cadastro de matrícula'}</h1>
           <div className="options">
@@ -121,15 +162,17 @@ export default function FormPlans({ match }) {
             placeholder="Selecione o plano"
             label="PLANO"
             options={plans}
+            onChange={plan => setSelectedPlan(plan)}
           />
           <DatePicker
             name="start_date"
             placeholder="Escolha a data"
             label="DATA DE INÍCIO"
             minDate={new Date()}
+            onChange={date => setStartDate(date)}
           />
-          <Input name="end_date" label="DATA DE TÉRMINO" disabled />
-          <Input name="end_value" label="VALOR FINAL" disabled />
+          <DatePicker name="end_date" label="DATA DE TÉRMINO" disabled />
+          <CurrencyInput name="end_price" label="VALOR FINAL" disabled />
         </Card>
       </Form>
     </Container>

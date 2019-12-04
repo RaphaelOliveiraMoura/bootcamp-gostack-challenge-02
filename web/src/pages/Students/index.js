@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from '@rocketseat/unform';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -43,10 +42,6 @@ export default function Students() {
     loadStudents();
   }, [currentPage, filter]);
 
-  async function handleFilterSubmit({ filter: filterForm }) {
-    setFilter(filterForm);
-  }
-
   async function handleDelete(student) {
     async function deleteUser() {
       try {
@@ -80,9 +75,11 @@ export default function Students() {
           <Link to="/students/create">
             <AddButton>CADASTRAR</AddButton>
           </Link>
-          <Form onSubmit={handleFilterSubmit}>
-            <FilterInput name="filter" placeholder="Buscar aluno" />
-          </Form>
+          <FilterInput
+            name="filter"
+            placeholder="Buscar aluno"
+            onChange={e => setFilter(e.target.value)}
+          />
         </div>
       </ContentHeader>
       {students.length > 0 ? (
