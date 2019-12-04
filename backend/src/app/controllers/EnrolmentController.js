@@ -18,6 +18,23 @@ class EnrolmentController {
     return response.json(enrolments);
   }
 
+  async show(request, response) {
+    const { id } = request.params;
+
+    const enrolment = await Enrolment.findByPk(id, {
+      attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
+      include: [
+        { association: 'student', attributes: ['id', 'name', 'email'] },
+        {
+          association: 'plan',
+          attributes: ['id', 'title', 'duration', 'price'],
+        },
+      ],
+    });
+
+    return response.json(enrolment);
+  }
+
   async store(request, response) {
     const { start_date, plan_id, student_id } = request.body;
     const { plan, end_date } = request;
