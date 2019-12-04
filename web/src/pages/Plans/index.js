@@ -15,6 +15,7 @@ import {
 import Button from '~/components/Button';
 import TitleContainer from '~/components/TitleContainer';
 import ConfirmDialog from '~/components/ConfirmDialog';
+import Pagination from '~/components/Pagination';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -24,9 +25,14 @@ import { formatPrice } from '~/util/format';
 export default function Plans() {
   const [plans, setPlans] = useState([]);
 
+  const [pages, setPages] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
     async function loadPlans() {
-      const response = await api.get('/plans');
+      const response = await api.get('/plans', {
+        params: { page: currentPage },
+      });
 
       const data = response.data.map(plan => ({
         ...plan,
@@ -39,9 +45,10 @@ export default function Plans() {
       }));
 
       setPlans(data);
+      setPages(Number(response.headers.total_pages));
     }
     loadPlans();
-  }, []);
+  }, [currentPage]);
 
   async function handleDelete(plan) {
     async function deletePlan() {
@@ -110,6 +117,11 @@ export default function Plans() {
               ))}
             </tbody>
           </Table>
+          <Pagination
+            pages={pages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </>
       ) : (
         <EmptyContainer>Nenhum plano encontrado</EmptyContainer>
