@@ -95,6 +95,7 @@ class EnrolmentValidator {
      */
     const schema = Yup.object().shape({
       plan_id: Yup.number(),
+      student_id: Yup.number(),
       start_date: Yup.date(),
     });
 
@@ -116,6 +117,19 @@ class EnrolmentValidator {
     }
 
     request.enrolment = enrolment;
+
+    /**
+     * Check student exists
+     */
+    const student = request.body.student_id
+      ? await Student.findByPk(request.body.student_id)
+      : enrolment.student;
+
+    if (!student) {
+      return response.status(400).json({ error: 'Student does not exists' });
+    }
+
+    request.student = student;
 
     /**
      * Check plan exists

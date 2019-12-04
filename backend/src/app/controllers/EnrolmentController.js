@@ -60,11 +60,13 @@ class EnrolmentController {
   }
 
   async update(request, response) {
+    const { id: student_id } = request.student;
     const { id: plan_id } = request.plan;
     const { enrolment, end_date } = request;
     const { start_date } = request.body;
 
     await enrolment.update({
+      student_id,
       plan_id,
       start_date,
       end_date,
