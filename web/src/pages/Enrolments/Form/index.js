@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { Form } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
-import { parseISO, addMonths } from 'date-fns';
+import { parseISO, addMonths, endOfDay, startOfDay, addDays } from 'date-fns';
 
 import {
   Container,
@@ -22,7 +22,7 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 const schema = Yup.object().shape({
-  student_id: Yup.string()
+  student_id: Yup.number()
     .typeError('Escolha um aluno')
     .required('Escolha um aluno válido'),
   plan_id: Yup.number()
@@ -30,46 +30,46 @@ const schema = Yup.object().shape({
     .required('Escolha um plano válido'),
   start_date: Yup.date()
     .typeError('Digite uma data')
-    .min(new Date())
+    .min(endOfDay(new Date()))
     .required('Digite uma data válida'),
 });
 
 export default function FormPlans({ match }) {
   const { id } = match.params;
 
-  const [students, setStudents] = useState([]);
-  const [plans, setPlans] = useState([]);
   const [initialData, setInitialData] = useState({});
 
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [start_date, setStartDate] = useState(null);
 
-  const loadStudents = useCallback(() => {
+  const loadStudents = useCallback((inputValue = '') => {
     async function load() {
-      const response = await api.get('/students');
+      const response = await api.get('/students', {
+        params: { q: inputValue },
+      });
       const data = response.data.map(student => ({
         id: student.id,
         title: student.name,
         data: student,
       }));
-      setStudents(data);
+      return data;
     }
 
-    load();
+    return load();
   }, []);
 
-  const loadPlans = useCallback(() => {
+  const loadPlans = useCallback((inputValue = '') => {
     async function load() {
-      const response = await api.get('/plans');
+      const response = await api.get('/plans', { params: { q: inputValue } });
       const data = response.data.map(plan => ({
         id: plan.id,
         title: plan.title,
         data: plan,
       }));
-      setPlans(data);
+      return data;
     }
 
-    load();
+    return load();
   }, []);
 
   useEffect(() => {
@@ -80,12 +80,27 @@ export default function FormPlans({ match }) {
         const { data } = response;
 
         setInitialData({
-          student_id: data.student.id,
-          plan_id: data.plan.id,
+          student_id: {
+            id: data.student.id,
+            title: data.student.name,
+            data: data.student,
+          },
+          plan_id: {
+            id: data.plan.id,
+            title: data.plan.title,
+            data: data.plan,
+          },
           start_date: parseISO(data.start_date),
-          end_date: addMonths(parseISO(data.start_date), data.plan.duration),
           end_price: data.price,
         });
+
+        setSelectedPlan({
+          id: data.plan.id,
+          title: data.plan.title,
+          data: data.plan,
+        });
+
+        setStartDate(parseISO(data.start_date));
       } catch (error) {
         history.push('/enrolments/create');
       }
@@ -155,20 +170,20 @@ export default function FormPlans({ match }) {
             name="student_id"
             label="ALUNO"
             placeholder="Buscar aluno"
-            options={students}
+            loadFunction={loadStudents}
           />
           <Select
             name="plan_id"
             placeholder="Selecione o plano"
             label="PLANO"
-            options={plans}
+            loadFunction={loadPlans}
             onChange={plan => setSelectedPlan(plan)}
           />
           <DatePicker
             name="start_date"
             placeholder="Escolha a data"
             label="DATA DE INÍCIO"
-            minDate={new Date()}
+            minDate={startOfDay(addDays(new Date(), 1))}
             onChange={date => setStartDate(date)}
           />
           <DatePicker name="end_date" label="DATA DE TÉRMINO" disabled />

@@ -1,17 +1,29 @@
-import React, { useRef, useEffect } from 'react';
-import Select from 'react-select';
+import React, { useRef, useEffect, useState } from 'react';
+import AsyncSelect from 'react-select/async';
 import PropTypes from 'prop-types';
 
 import { useField } from '@rocketseat/unform';
 
 import { Container } from './styles';
 
-export default function ReactSelect({ name, label, options, ...rest }) {
+export default function ReactSelect({
+  name,
+  label,
+  loadFunction,
+  onChange,
+  ...rest
+}) {
   const ref = useRef(null);
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
+  const [selectedValue, setSelectedValue] = useState(defaultValue);
+
+  useEffect(() => {
+    setSelectedValue(defaultValue);
+  }, [defaultValue]);
+
   function parseSelectValue(selectRef) {
-    const selectValue = selectRef.state.value;
+    const selectValue = selectRef.props.value;
     return selectValue ? selectValue.id : '';
   }
 
@@ -19,7 +31,7 @@ export default function ReactSelect({ name, label, options, ...rest }) {
     registerField({
       name: fieldName,
       ref: ref.current,
-      path: 'state.value',
+      path: 'props.value',
       parseValue: parseSelectValue,
       clearValue: selectRef => {
         selectRef.select.clearValue();
@@ -27,21 +39,22 @@ export default function ReactSelect({ name, label, options, ...rest }) {
     });
   }, [ref.current, fieldName]); // eslint-disable-line
 
-  function getDefaultValue() {
-    if (!defaultValue) return null;
-    return options.find(option => option.id === defaultValue);
-  }
-
   return (
     <Container>
       {label && <label htmlFor={fieldName}>{label}</label>}
 
-      <Select
+      <AsyncSelect
         name={fieldName}
         aria-label={fieldName}
-        options={options}
+        loadOptions={loadFunction}
         isMulti={false}
-        defaultValue={getDefaultValue()}
+        cacheOptions
+        value={selectedValue}
+        onChange={updatedValue => {
+          setSelectedValue(updatedValue);
+          onChange(updatedValue);
+        }}
+        defaultOptions
         ref={ref}
         getOptionValue={option => option.id}
         getOptionLabel={option => option.title}
@@ -58,10 +71,14 @@ ReactSelect.propTypes = {
   label: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.object),
   multiple: PropTypes.bool,
+  loadFunction: PropTypes.func,
+  onChange: PropTypes.func,
 };
 
 ReactSelect.defaultProps = {
   label: null,
   options: [],
   multiple: false,
+  loadFunction: null,
+  onChange: () => {},
 };

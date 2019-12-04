@@ -4,7 +4,7 @@ import Button from '~/components/Button';
 import TableWrapper from '~/components/Table';
 
 export const Container = styled.div`
-  margin: 30px 20px;
+  margin: 30px auto;
   max-width: 1380px;
   padding: 0 8px;
 `;
