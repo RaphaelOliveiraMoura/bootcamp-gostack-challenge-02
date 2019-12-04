@@ -12,11 +12,10 @@ module.exports = {
         allowNull: false,
         references: { model: 'students', key: 'id' },
         onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
+        onDelete: 'CASCADE',
       },
       plan_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: { model: 'plans', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
