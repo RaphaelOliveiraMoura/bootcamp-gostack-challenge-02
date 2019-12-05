@@ -31,7 +31,7 @@ export default function Students() {
       const response = await api.get('/students', {
         params: {
           page: currentPage,
-          per_page: 7,
+          per_page: 10,
           q: filter,
         },
       });
