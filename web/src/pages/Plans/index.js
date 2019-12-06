@@ -4,18 +4,14 @@ import { formatDistanceStrict, addMonths } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { toast } from 'react-toastify';
 
-import {
-  Container,
-  Table,
-  EditButton,
-  DeleteButton,
-  EmptyContainer,
-} from './styles';
+import { Container, EditButton, DeleteButton } from './styles';
 
 import Button from '~/components/Button';
-import TitleContainer from '~/components/TitleContainer';
+import Table from '~/components/Table';
+import HeadContent from '~/components/HeadContent';
 import ConfirmDialog from '~/components/ConfirmDialog';
 import Pagination from '~/components/Pagination';
+import EmptyContainer from '~/components/EmptyContainer';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -74,12 +70,12 @@ export default function Plans() {
 
   return (
     <Container>
-      <TitleContainer>
+      <HeadContent>
         <h1>Gerenciando planos</h1>
         <Link to="/plans/create">
           <Button>CADASTRAR</Button>
         </Link>
-      </TitleContainer>
+      </HeadContent>
       {plans.length > 0 ? (
         <>
           <Table>

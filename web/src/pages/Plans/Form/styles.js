@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import Button from '~/components/Button';
 import InputWrapper from '~/components/Input';
-import TitleContainer from '~/components/TitleContainer';
+import HeadContent from '~/components/HeadContent';
 
 export const Container = styled.div`
   margin: 30px auto;
@@ -10,7 +10,7 @@ export const Container = styled.div`
   max-width: 900px;
 `;
 
-export const ContentHeader = styled(TitleContainer)`
+export const ContentHeader = styled(HeadContent)`
   .options {
     display: flex;
     align-items: center;

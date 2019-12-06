@@ -4,16 +4,13 @@ import { parseISO, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { toast } from 'react-toastify';
 
-import {
-  Container,
-  Table,
-  EditButton,
-  DeleteButton,
-  EmptyContainer,
-} from './styles';
-import TitleContainer from '~/components/TitleContainer';
+import { Container, EditButton, DeleteButton } from './styles';
+
+import HeadContent from '~/components/HeadContent';
 import Button from '~/components/Button';
+import Table from '~/components/Table';
 import ConfirmDialog from '~/components/ConfirmDialog';
+import EmptyContainer from '~/components/EmptyContainer';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -72,12 +69,12 @@ export default function Enrolments() {
 
   return (
     <Container>
-      <TitleContainer>
+      <HeadContent>
         <h1>Gerenciando matrículas</h1>
         <Link to="/enrolments/create">
           <Button>CADASTRAR</Button>
         </Link>
-      </TitleContainer>
+      </HeadContent>
       {enrolments.length > 0 ? (
         <Table>
           <thead>

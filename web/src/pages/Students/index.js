@@ -2,19 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import {
-  Container,
-  ContentHeader,
-  AddButton,
-  FilterInput,
-  Table,
-  EditButton,
-  DeleteButton,
-  EmptyContainer,
-} from './styles';
+import { Container, HeadContent, EditButton, DeleteButton } from './styles';
 
 import ConfirmDialog from '~/components/ConfirmDialog';
+import Button from '~/components/Button';
+import Table from '~/components/Table';
 import Pagination from '~/components/Pagination';
+import Input from '~/components/Input';
+import EmptyContainer from '~/components/EmptyContainer';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -69,19 +64,19 @@ export default function Students() {
 
   return (
     <Container>
-      <ContentHeader>
+      <HeadContent>
         <h1>Gerenciando alunos</h1>
         <div className="options">
           <Link to="/students/create">
-            <AddButton>CADASTRAR</AddButton>
+            <Button>CADASTRAR</Button>
           </Link>
-          <FilterInput
+          <Input
             name="filter"
             placeholder="Buscar aluno"
             onChange={e => setFilter(e.target.value)}
           />
         </div>
-      </ContentHeader>
+      </HeadContent>
       {students.length > 0 ? (
         <>
           <Table>

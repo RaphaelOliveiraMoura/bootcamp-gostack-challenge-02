@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const TitleContainer = styled.div`
+const HeadContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -17,4 +17,4 @@ const TitleContainer = styled.div`
   }
 `;
 
-export default TitleContainer;
+export default HeadContent;
