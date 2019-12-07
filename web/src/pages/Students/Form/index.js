@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { Form } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
+import { MdCheck, MdKeyboardArrowLeft } from 'react-icons/md';
 
 import {
   Container,
@@ -95,11 +96,17 @@ export default function FormStudents({ match }) {
           <h1>{id ? 'Edição de aluno' : 'Cadastro de aluno'}</h1>
           <div className="options">
             <Link to="/students">
-              <BackButton background="#ccc" type="button">
+              <BackButton
+                icon={MdKeyboardArrowLeft}
+                background="#ccc"
+                type="button"
+              >
                 VOLTAR
               </BackButton>
             </Link>
-            <SaveButton type="submit">SALVAR</SaveButton>
+            <SaveButton type="submit" icon={MdCheck}>
+              SALVAR
+            </SaveButton>
           </div>
         </ContentHeader>
         <Card>

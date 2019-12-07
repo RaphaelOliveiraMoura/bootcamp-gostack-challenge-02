@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { formatDistanceStrict, addMonths } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { toast } from 'react-toastify';
+import { MdAdd } from 'react-icons/md';
 
 import { Container, EditButton, DeleteButton } from './styles';
 
@@ -73,7 +74,7 @@ export default function Plans() {
       <HeadContent>
         <h1>Gerenciando planos</h1>
         <Link to="/plans/create">
-          <Button>CADASTRAR</Button>
+          <Button icon={MdAdd}>CADASTRAR</Button>
         </Link>
       </HeadContent>
       {plans.length > 0 ? (

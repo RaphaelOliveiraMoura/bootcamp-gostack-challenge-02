@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Form } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
 import { parseISO, addMonths, endOfDay, startOfDay, addDays } from 'date-fns';
+import { MdCheck, MdKeyboardArrowLeft } from 'react-icons/md';
 
 import {
   Container,
@@ -159,11 +160,17 @@ export default function FormPlans({ match }) {
           <h1>{id ? 'Edição de matrícula' : 'Cadastro de matrícula'}</h1>
           <div className="options">
             <Link to="/enrolments">
-              <BackButton background="#ccc" type="button">
+              <BackButton
+                icon={MdKeyboardArrowLeft}
+                background="#ccc"
+                type="button"
+              >
                 VOLTAR
               </BackButton>
             </Link>
-            <SaveButton type="submit">SALVAR</SaveButton>
+            <SaveButton icon={MdCheck} type="submit">
+              SALVAR
+            </SaveButton>
           </div>
         </ContentHeader>
         <Card>

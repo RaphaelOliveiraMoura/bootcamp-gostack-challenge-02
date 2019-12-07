@@ -15,6 +15,10 @@ export const Container = styled.button`
   justify-content: center;
   align-items: center;
 
+  svg {
+    margin-right: 8px;
+  }
+
   &:hover {
     background: ${props => darken(0.06, props.background || '#ee4d64')};
   }

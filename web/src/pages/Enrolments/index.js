@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { parseISO, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { toast } from 'react-toastify';
+import { MdAdd, MdCheckCircle } from 'react-icons/md';
 
 import { Container, EditButton, DeleteButton } from './styles';
 
@@ -79,7 +80,7 @@ export default function Enrolments() {
       <HeadContent>
         <h1>Gerenciando matrículas</h1>
         <Link to="/enrolments/create">
-          <Button>CADASTRAR</Button>
+          <Button icon={MdAdd}>CADASTRAR</Button>
         </Link>
       </HeadContent>
       {enrolments.length > 0 ? (
@@ -104,7 +105,13 @@ export default function Enrolments() {
                   </td>
                   <td>{enrolment.formatted_start_date}</td>
                   <td>{enrolment.formatted_end_date}</td>
-                  <td>{enrolment.active ? 'Ativa' : 'Inativa'}</td>
+                  <td>
+                    {enrolment.active ? (
+                      <MdCheckCircle size={20} color="#dddddd" />
+                    ) : (
+                      <MdCheckCircle size={20} color="#42cb59" />
+                    )}
+                  </td>
                   <td>
                     <div className="options">
                       <EditButton

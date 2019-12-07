@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { MdAdd } from 'react-icons/md';
 
 import { Container, HeadContent, EditButton, DeleteButton } from './styles';
 
@@ -68,7 +69,7 @@ export default function Students() {
         <h1>Gerenciando alunos</h1>
         <div className="options">
           <Link to="/students/create">
-            <Button>CADASTRAR</Button>
+            <Button icon={MdAdd}>CADASTRAR</Button>
           </Link>
           <Input
             name="filter"

@@ -27,8 +27,8 @@ export const Container = styled.div`
     }
 
     @media (max-width: 620px) {
-      th:nth-child(1),
-      td:nth-child(1) {
+      th:nth-child(2),
+      td:nth-child(2) {
         display: none;
       }
     }

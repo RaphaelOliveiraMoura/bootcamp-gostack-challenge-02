@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { Form } from '@rocketseat/unform';
 import { toast } from 'react-toastify';
+import { MdCheck, MdKeyboardArrowLeft } from 'react-icons/md';
 
 import {
   Container,
@@ -101,11 +102,17 @@ export default function FormPlans({ match }) {
           <h1>{id ? 'Edição de plano' : 'Cadastro de plano'}</h1>
           <div className="options">
             <Link to="/plans">
-              <BackButton background="#ccc" type="button">
+              <BackButton
+                icon={MdKeyboardArrowLeft}
+                background="#ccc"
+                type="button"
+              >
                 VOLTAR
               </BackButton>
             </Link>
-            <SaveButton type="submit">SALVAR</SaveButton>
+            <SaveButton icon={MdCheck} type="submit">
+              SALVAR
+            </SaveButton>
           </div>
         </ContentHeader>
         <Card>

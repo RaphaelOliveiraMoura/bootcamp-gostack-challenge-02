@@ -12,7 +12,6 @@ const HeadContent = styled.div`
   }
 
   button {
-    height: 36px;
     font-size: 14px;
   }
 `;
