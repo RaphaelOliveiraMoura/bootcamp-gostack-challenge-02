@@ -12,7 +12,8 @@ export const Container = styled.div`
     margin-bottom: 8px;
   }
 
-  input {
+  input,
+  textarea {
     border: 1px solid #dddddd;
     padding: 10px 15px;
     color: #333;

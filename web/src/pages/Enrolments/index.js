@@ -58,7 +58,7 @@ export default function Enrolments() {
     ConfirmDialog({
       title: 'Apagar matrícula',
       onConfirm: deleteEnrolment,
-      component: (
+      content: (
         <p>
           Tem certeza que deseja apagar a matrícula do(a) aluno(a)&nbsp;
           <strong>{enrolment.student.name} </strong>?
@@ -120,7 +120,7 @@ export default function Enrolments() {
           </tbody>
         </Table>
       ) : (
-        <EmptyContainer>Nenhum aluno encontrado</EmptyContainer>
+        <EmptyContainer>Nenhuma matrícula encontrada</EmptyContainer>
       )}
     </Container>
   );

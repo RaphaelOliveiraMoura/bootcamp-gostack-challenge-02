@@ -10,6 +10,7 @@ const EmptyContainer = styled.div`
   font-size: 28px;
   color: #ddd;
   border-radius: 4px;
+  text-align: center;
 `;
 
 export default EmptyContainer;

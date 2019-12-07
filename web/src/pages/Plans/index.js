@@ -21,7 +21,7 @@ import { formatPrice } from '~/util/format';
 export default function Plans() {
   const [plans, setPlans] = useState([]);
 
-  const [pages, setPages] = useState(10);
+  const [pages, setPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function Plans() {
     ConfirmDialog({
       title: 'Apagar plano',
       onConfirm: deletePlan,
-      component: (
+      content: (
         <p>
           Tem certeza que deseja apagar o plano <strong>{plan.title} </strong>?
         </p>

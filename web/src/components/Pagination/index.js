@@ -37,10 +37,9 @@ export default function Pagination({ pages, currentPage, setCurrentPage }) {
           if (spread) lastSpread = pageNumber;
 
           return (
-            <>
+            <div key={String(pageNumber)}>
               {visible ? (
                 <Item
-                  key={String(pageNumber)}
                   active={currentPage === pageNumber}
                   onClick={() => setCurrentPage(pageNumber)}
                 >
@@ -49,7 +48,7 @@ export default function Pagination({ pages, currentPage, setCurrentPage }) {
               ) : (
                 showSpread && <p>...</p>
               )}
-            </>
+            </div>
           );
         })}
     </Container>

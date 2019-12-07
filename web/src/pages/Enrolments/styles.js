@@ -8,7 +8,7 @@ export const Container = styled.div`
   padding: 0 8px;
 
   table {
-    @media (max-width: 780px) {
+    @media (max-width: 870px) {
       th:nth-child(3),
       td:nth-child(3) {
         display: none;
@@ -19,12 +19,6 @@ export const Container = styled.div`
         display: none;
       }
     }
-
-    /* @media (max-width: 450px) {
-      th:nth-child(5),
-      td:nth-child(5) {
-        display: none;
-      } */
 
     @media (max-width: 450px) {
       th:nth-child(3),

@@ -20,7 +20,7 @@ export const Container = styled.div`
     color: #666;
   }
 
-  div {
+  div.buttons {
     display: flex;
     justify-content: flex-end;
     margin-top: 16px;

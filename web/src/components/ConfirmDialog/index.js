@@ -9,31 +9,39 @@ import Button from '~/components/Button';
 export default function ConfirmDialog({
   title = 'Tem certeza disso ?',
   description = null,
-  component = null,
+  content = null,
+  component = () => {},
   onConfirm = () => {},
 }) {
   return confirmAlert({
     // eslint-disable-next-line react/prop-types
     customUI: ({ onClose }) => {
       return (
-        <Container>
-          <h1>{title}</h1>
-          {description && <p>{description}</p>}
-          {component && <section>{component}</section>}
-          <div>
-            <Button background="#ccc" onClick={onClose}>
-              Cancelar
-            </Button>
-            <Button
-              onClick={() => {
-                onClose();
-                onConfirm();
-              }}
-            >
-              Confirmar
-            </Button>
-          </div>
-        </Container>
+        <>
+          <Container>
+            {component(onClose) || (
+              <>
+                <h1>{title}</h1>
+                {description && <p>{description}</p>}
+                {content && <section>{content}</section>}
+                <div className="buttons">
+                  <Button background="#ccc" onClick={onClose}>
+                    Cancelar
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      onClose();
+                      onConfirm();
+                    }}
+                  >
+                    Confirmar
+                  </Button>
+                </div>
+              </>
+            )}
+          </Container>
+          )
+        </>
       );
     },
   });
