@@ -7,13 +7,10 @@ const fakeData = Array(TOTAL_OF_FAKE_DATA)
   .fill(0)
   .map(() => ({
     student_id: faker.random.number({ min: 1, max: 100 }),
-    plan_id: faker.random.number({ min: 1, max: 100 }),
+    plan_id: faker.random.number({ min: 1, max: 10 }),
     price: faker.random.number({ min: 0, max: 500, precision: 0.01 }),
-    start_date: faker.date.between(new Date(), new Date('2022-01-01')),
-    end_date: faker.date.between(
-      new Date('2022-01-01'),
-      new Date('2025-01-01')
-    ),
+    start_date: faker.date.between('2018-01-01', '2021-01-01'),
+    end_date: faker.date.between('2021-01-01', '2022-01-01'),
     created_at: new Date(),
     updated_at: new Date(),
   }));

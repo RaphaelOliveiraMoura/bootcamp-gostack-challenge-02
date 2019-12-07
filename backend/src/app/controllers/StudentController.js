@@ -14,6 +14,7 @@ class StudentController {
       },
       offset: (page - 1) * per_page,
       limit: per_page,
+      order: [['updated_at', 'DESC']],
     });
 
     return response

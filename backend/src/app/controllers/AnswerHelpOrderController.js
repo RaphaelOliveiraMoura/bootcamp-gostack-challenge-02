@@ -13,6 +13,7 @@ class AnswerHelpOrderController {
       where: { answer: null },
       offset: (page - 1) * per_page,
       limit: per_page,
+      order: [['updated_at', 'DESC']],
     });
 
     return response

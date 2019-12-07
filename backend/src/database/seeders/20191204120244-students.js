@@ -8,7 +8,7 @@ const fakeData = Array(TOTAL_OF_FAKE_DATA)
   .map(() => ({
     name: faker.name.findName(),
     email: faker.internet.email(),
-    birth: faker.date.between(new Date('1970-01-01'), new Date('2004-01-01')),
+    birth: faker.date.between('1970-01-01', '2004-01-01'),
     weigth: faker.random.number({ min: 30, max: 160 }),
     height: faker.random.number({ min: 1.5, max: 2, precision: 0.01 }),
     created_at: new Date(),

@@ -3,19 +3,25 @@ import Plan from '~/app/models/Plan';
 
 class PlanController {
   async index(request, response) {
-    const { page = 1, per_page = 5, q = '' } = request.query;
+    const { page = 1, per_page = 5, q = '', paginate = 'true' } = request.query;
+
+    const usePaginate = paginate === 'true';
+
+    const offset = usePaginate ? (page - 1) * per_page : null;
+    const limit = usePaginate ? per_page : null;
 
     const { rows: plans, count } = await Plan.findAndCountAll({
       where: {
         [Op.or]: [{ title: { [Op.iLike]: `%${q}%` } }],
       },
-      offset: (page - 1) * per_page,
-      limit: per_page,
+      offset,
+      limit,
+      order: [['updated_at', 'DESC']],
     });
 
-    return response
-      .set({ total_pages: Math.ceil(count / per_page) })
-      .json(plans);
+    const total_pages = usePaginate ? Math.ceil(count / per_page) : null;
+
+    return response.set({ total_pages }).json(plans);
   }
 
   async show(request, response) {
