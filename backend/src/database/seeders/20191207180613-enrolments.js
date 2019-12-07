@@ -6,9 +6,14 @@ const TOTAL_OF_FAKE_DATA = process.env.FAKE_DATA ? 100 : 0;
 const fakeData = Array(TOTAL_OF_FAKE_DATA)
   .fill(0)
   .map(() => ({
-    title: faker.commerce.productName(),
-    duration: faker.random.number({ min: 1, max: 24 }),
+    student_id: faker.random.number({ min: 1, max: 100 }),
+    plan_id: faker.random.number({ min: 1, max: 100 }),
     price: faker.random.number({ min: 0, max: 500, precision: 0.01 }),
+    start_date: faker.date.between(new Date(), new Date('2022-01-01')),
+    end_date: faker.date.between(
+      new Date('2022-01-01'),
+      new Date('2025-01-01')
+    ),
     created_at: new Date(),
     updated_at: new Date(),
   }));
@@ -16,26 +21,14 @@ const fakeData = Array(TOTAL_OF_FAKE_DATA)
 module.exports = {
   up: queryInterface => {
     return queryInterface.bulkInsert(
-      'plans',
+      'enrolments',
       [
         {
-          title: 'Start',
-          duration: 1,
-          price: 129,
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-        {
-          title: 'Gold',
-          duration: 3,
-          price: 109,
-          created_at: new Date(),
-          updated_at: new Date(),
-        },
-        {
-          title: 'Diamond',
-          duration: 6,
-          price: 89,
+          student_id: 1,
+          plan_id: 2,
+          price: 327,
+          start_date: new Date('2019-12-08'),
+          end_date: new Date('2020-03-08'),
           created_at: new Date(),
           updated_at: new Date(),
         },
@@ -46,6 +39,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.bulkDelete('plans', null, {});
+    return queryInterface.bulkDelete('enrolments', null, {});
   },
 };
