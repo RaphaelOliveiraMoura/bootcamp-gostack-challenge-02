@@ -10,13 +10,14 @@ import {
   Container,
   ContentHeader,
   Card,
-  Select,
   BackButton,
   SaveButton,
 } from './styles';
 
 import DatePicker from '~/components/Input/DatePicker';
 import CurrencyInput from '~/components/Input/Currency';
+import AsyncSelect from '~/components/Input/AsyncSelect';
+import Select from '~/components/Input/Select';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -39,6 +40,8 @@ export default function FormPlans({ match }) {
 
   const [initialData, setInitialData] = useState({});
 
+  const [plans, setPlans] = useState([]);
+
   const [selectedPlan, setSelectedPlan] = useState(null);
   const [start_date, setStartDate] = useState(null);
 
@@ -58,21 +61,20 @@ export default function FormPlans({ match }) {
     return load();
   }, []);
 
-  const loadPlans = useCallback((inputValue = '') => {
-    async function load() {
-      const response = await api.get('/plans', { params: { q: inputValue } });
+  useEffect(() => {
+    async function loadPlans() {
+      const response = await api.get('/plans', {
+        params: { paginate: false },
+      });
       const data = response.data.map(plan => ({
         id: plan.id,
         title: plan.title,
         data: plan,
       }));
-      return data;
+
+      setPlans(data);
     }
 
-    return load();
-  }, []);
-
-  useEffect(() => {
     async function loadEnrolment() {
       try {
         const response = await api.get(`/enrolments/${id}`);
@@ -106,13 +108,12 @@ export default function FormPlans({ match }) {
       }
     }
 
+    loadPlans();
+
     if (id) {
       loadEnrolment();
     }
-
-    loadStudents();
-    loadPlans();
-  }, [id, loadPlans, loadStudents]);
+  }, [id, loadStudents]);
 
   useEffect(() => {
     if (selectedPlan && start_date) {
@@ -166,17 +167,17 @@ export default function FormPlans({ match }) {
           </div>
         </ContentHeader>
         <Card>
-          <Select
+          <AsyncSelect
             name="student_id"
             label="ALUNO"
             placeholder="Buscar aluno"
             loadFunction={loadStudents}
+            noOptionsMessage={() => 'Digite o nome ou email do aluno'}
           />
           <Select
             name="plan_id"
-            placeholder="Selecione o plano"
             label="PLANO"
-            loadFunction={loadPlans}
+            options={plans}
             onChange={plan => setSelectedPlan(plan)}
           />
           <DatePicker

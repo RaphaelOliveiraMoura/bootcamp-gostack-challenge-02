@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 import Button from '~/components/Button';
 import InputWrapper from '~/components/Input';
-import SelectWrapper from '~/components/Input/Select';
 import HeadContent from '~/components/HeadContent';
 
 export const Container = styled.div`
@@ -50,8 +49,6 @@ export const Card = styled.div`
 export const Input = styled(InputWrapper)`
   overflow: hidden;
 `;
-
-export const Select = styled(SelectWrapper)``;
 
 export const BackButton = styled(Button)`
   font-size: 14px;
