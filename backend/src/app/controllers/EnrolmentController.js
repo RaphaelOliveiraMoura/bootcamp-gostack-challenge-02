@@ -4,7 +4,9 @@ import Enrolment from '~/app/models/Enrolment';
 
 class EnrolmentController {
   async index(request, response) {
-    const enrolments = await Enrolment.findAll({
+    const { page = 1, per_page = 5 } = request.query;
+
+    const { rows: enrolments, count } = await Enrolment.findAndCountAll({
       attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
       include: [
         { association: 'student', attributes: ['id', 'name', 'email'] },
@@ -13,9 +15,14 @@ class EnrolmentController {
           attributes: ['id', 'title', 'duration', 'price'],
         },
       ],
+      offset: (page - 1) * per_page,
+      limit: per_page,
       order: [['start_date', 'DESC']],
     });
-    return response.json(enrolments);
+
+    return response
+      .set({ total_pages: Math.ceil(count / per_page) })
+      .json(enrolments);
   }
 
   async show(request, response) {

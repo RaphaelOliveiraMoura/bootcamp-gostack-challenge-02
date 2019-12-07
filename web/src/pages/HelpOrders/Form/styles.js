@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 450px;
 
   strong {
     color: #444444;
@@ -17,5 +18,6 @@ export const Container = styled.div`
 
   button {
     margin-top: 20px;
+    width: 100%;
   }
 `;

@@ -19,13 +19,15 @@ export default function HelpOrders() {
 
   useEffect(() => {
     async function loadHelpOrders() {
-      const response = await api.get('/help-orders');
+      const response = await api.get('/help-orders', {
+        params: { page: currentPage },
+      });
       setHelpOrders(response.data);
       setPages(Number(response.headers.total_pages));
     }
 
     loadHelpOrders();
-  }, []);
+  }, [currentPage]);
 
   function handleOpenDialog(helpOrder) {
     ConfirmDialog({

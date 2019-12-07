@@ -20,10 +20,7 @@ const schema = Yup.object().shape({
 export default function Form({ helpOrder, closeDialog }) {
   async function handleSubmit({ answer }) {
     try {
-      await api.post(`help-orders/${helpOrder.id}/answer`, {
-        answer,
-      });
-
+      await api.post(`help-orders/${helpOrder.id}/answer`, { answer });
       closeDialog();
       toast.success('Resposta enviada para o aluno');
     } catch (error) {
