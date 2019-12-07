@@ -1,7 +1,7 @@
 require('dotenv').config();
 const faker = require('faker');
 
-const TOTAL_OF_FAKE_DATA = process.env.FAKE_DATA ? 10 : 0;
+const TOTAL_OF_FAKE_DATA = process.env.FAKE_DATA === 'true' ? 10 : 0;
 
 const fakeData = Array(TOTAL_OF_FAKE_DATA)
   .fill(0)
