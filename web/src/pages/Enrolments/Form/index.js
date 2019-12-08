@@ -143,7 +143,9 @@ export default function FormPlans({ match }) {
         toast.success('Matrícula realizada');
         history.push('/enrolments');
       } catch (error) {
-        toast.error('Error ao realizar matrícula');
+        toast.error(
+          'Error ao realizar matrícula, verifique se o estudante já está matriculado'
+        );
       }
     }
   }
