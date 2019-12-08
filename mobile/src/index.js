@@ -1,11 +1,16 @@
 import React from 'react';
 
-import { Text } from 'react-native';
+// import App from '~/App';
 
-export default function App() {
+// import SignIn from '~/pages/SignIn';
+// import Checkings from '~/pages/Checkings';
+// import HelpOrders from '~/pages/HelpOrders';
+import HelpOrdersInfo from '~/pages/HelpOrders/Info';
+
+export default function Index() {
   return (
     <>
-      <Text>Gympoint</Text>
+      <HelpOrdersInfo />
     </>
   );
 }
