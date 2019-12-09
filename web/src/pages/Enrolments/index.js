@@ -107,9 +107,9 @@ export default function Enrolments() {
                   <td>{enrolment.formatted_end_date}</td>
                   <td>
                     {enrolment.active ? (
-                      <MdCheckCircle size={20} color="#dddddd" />
-                    ) : (
                       <MdCheckCircle size={20} color="#42cb59" />
+                    ) : (
+                      <MdCheckCircle size={20} color="#dddddd" />
                     )}
                   </td>
                   <td>

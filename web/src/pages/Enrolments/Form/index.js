@@ -135,7 +135,9 @@ export default function FormPlans({ match }) {
         toast.success('Matrícula atualizada com sucesso');
         history.push('/enrolments');
       } catch (error) {
-        toast.error('Error ao atualizar dados da matrícula');
+        toast.error(
+          'Erro ao realizar matrícula, verifique se o estudante já está matriculado'
+        );
       }
     } else {
       try {
@@ -144,7 +146,7 @@ export default function FormPlans({ match }) {
         history.push('/enrolments');
       } catch (error) {
         toast.error(
-          'Error ao realizar matrícula, verifique se o estudante já está matriculado'
+          'Erro ao realizar matrícula, verifique se o estudante já está matriculado'
         );
       }
     }
