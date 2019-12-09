@@ -8,7 +8,7 @@ export const HelpOrdersList = styled.FlatList`
   margin-top: 33px;
 `;
 
-export const HelpOrderContainer = styled.View`
+export const HelpOrderContainer = styled.TouchableOpacity`
   background: #fff;
   border-radius: 4px;
   border: 1px solid #dddddd;
@@ -32,7 +32,9 @@ export const HelpOrderTime = styled.Text`
   color: #666666;
 `;
 
-export const Question = styled.Text`
+export const Question = styled.Text.attrs({
+  numberOfLines: 3,
+})`
   margin-top: 16px;
   font-size: 14px;
   color: #666666;

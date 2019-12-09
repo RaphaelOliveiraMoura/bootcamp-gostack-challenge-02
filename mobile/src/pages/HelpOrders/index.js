@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   AddButton,
@@ -17,31 +18,36 @@ const helpOrders = [
   {
     id: 1,
     question:
-      'Olá pessoal da academia, gostaria de saber se quando acordar devo ingerir batata doce e frango logo de primeira, preparar as...',
+      'Olá pessoal da academia, gostaria de saber se quando acordar devo ingerir batata doce e frango logo de primeira, preparar as Olá pessoal da academia, gostaria de saber se quando acordar devo ingerir batata doce e frango logo de primeira, preparar as Olá pessoal da academia, gostaria de saber se quando acordar devo ingerir batata doce e frango logo de primeira, preparar as',
     time: 'Há 2 horas',
     answer: null,
   },
   {
     id: 2,
-    question:
-      'Olá pessoal da academia, gostaria de saber se quando acordar devo ingerir batata doce e frango logo de primeira, preparar as...',
+    question: 'Olá pessoal da arango logo de primeira, preparar as...',
     answer:
       'Opa, isso aí, duas em duas horas, não deixa pra depois, um monstro treina como um, come como dois.',
     time: 'Há 2 horas',
   },
 ];
 
-export default function HelpOrders() {
+export default function HelpOrders({ navigation }) {
   return (
     <>
       <Header />
       <Container>
-        <AddButton>Novo pedido de auxílio</AddButton>
+        <AddButton onPress={() => navigation.navigate('HelpOrdersCreate')}>
+          Novo pedido de auxílio
+        </AddButton>
         <HelpOrdersList
           data={helpOrders}
           keyExtractor={helpOrder => String(helpOrder.id)}
           renderItem={({ item }) => (
-            <HelpOrderContainer>
+            <HelpOrderContainer
+              onPress={() =>
+                navigation.navigate('HelpOrdersInfo', { helpOrder: item })
+              }
+            >
               <HelpOrderHeader>
                 {item.answer ? (
                   <Answered>Respondido</Answered>
@@ -58,3 +64,9 @@ export default function HelpOrders() {
     </>
   );
 }
+
+HelpOrders.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }).isRequired,
+};
