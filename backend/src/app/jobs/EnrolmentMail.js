@@ -10,7 +10,7 @@ class EnrolmentMail {
   async handle({ data }) {
     const { enrolment } = data;
 
-    console.log('A fila executou ...');
+    console.log('A fila de matrícula executou ...');
 
     await Mail.sendMail({
       to: `${enrolment.student.name} <${enrolment.student.email}>`,

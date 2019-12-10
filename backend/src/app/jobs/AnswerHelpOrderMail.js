@@ -8,7 +8,7 @@ class AnswerHelpOrderMail {
   async handle({ data }) {
     const { helpOrder } = data;
 
-    console.log('A fila executou ...');
+    console.log('A fila de pedido de auxílio executou ...');
 
     await Mail.sendMail({
       to: `${helpOrder.student.name} <${helpOrder.student.email}>`,
