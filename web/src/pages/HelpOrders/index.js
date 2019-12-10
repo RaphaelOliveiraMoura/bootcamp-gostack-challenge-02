@@ -43,7 +43,12 @@ export default function HelpOrders() {
   function handleOpenDialog(helpOrder) {
     ConfirmDialog({
       component: closeDialog => (
-        <Form helpOrder={helpOrder} closeDialog={closeDialog} />
+        <Form
+          helpOrder={helpOrder}
+          closeDialog={closeDialog}
+          helpOrders={helpOrders}
+          setHelpOrders={setHelpOrders}
+        />
       ),
     });
   }
