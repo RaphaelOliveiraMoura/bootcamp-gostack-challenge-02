@@ -60,6 +60,6 @@ Form.propTypes = {
     question: PropTypes.string,
   }).isRequired,
   closeDialog: PropTypes.func.isRequired,
-  helpOrders: PropTypes.func.isRequired,
+  helpOrders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   setHelpOrders: PropTypes.func.isRequired,
 };
