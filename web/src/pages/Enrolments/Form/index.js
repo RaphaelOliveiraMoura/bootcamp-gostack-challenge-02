@@ -62,20 +62,20 @@ export default function FormPlans({ match }) {
     return load();
   }, []);
 
+  const loadPlans = useCallback(async () => {
+    const response = await api.get('/plans', {
+      params: { paginate: false },
+    });
+    const data = response.data.map(plan => ({
+      id: plan.id,
+      title: plan.title,
+      data: plan,
+    }));
+
+    setPlans(data);
+  }, []);
+
   useEffect(() => {
-    async function loadPlans() {
-      const response = await api.get('/plans', {
-        params: { paginate: false },
-      });
-      const data = response.data.map(plan => ({
-        id: plan.id,
-        title: plan.title,
-        data: plan,
-      }));
-
-      setPlans(data);
-    }
-
     async function loadEnrolment() {
       try {
         const response = await api.get(`/enrolments/${id}`);
@@ -114,7 +114,7 @@ export default function FormPlans({ match }) {
     if (id) {
       loadEnrolment();
     }
-  }, [id, loadStudents]);
+  }, [id, loadPlans, loadStudents]);
 
   useEffect(() => {
     if (selectedPlan && start_date) {
@@ -189,6 +189,7 @@ export default function FormPlans({ match }) {
             name="plan_id"
             label="PLANO"
             options={plans}
+            value={selectedPlan}
             onChange={plan => setSelectedPlan(plan)}
           />
           <DatePicker
