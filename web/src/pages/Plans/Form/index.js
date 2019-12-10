@@ -27,7 +27,7 @@ const schema = Yup.object().shape({
     .typeError('Digite uma duração')
     .required('Insira uma duração'),
   price: Yup.number()
-    .typeError('Digite um valor para o preço')
+    .typeError('Digite um valor mensal')
     .required('Digite um valor mensal'),
 });
 

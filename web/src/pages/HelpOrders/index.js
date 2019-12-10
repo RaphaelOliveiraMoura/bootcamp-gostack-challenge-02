@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { Container, AnswerButton } from './styles';
 import { toast } from 'react-toastify';
+import { Container, AnswerButton } from './styles';
 
 import Form from './Form';
 import HeadContent from '~/components/HeadContent';

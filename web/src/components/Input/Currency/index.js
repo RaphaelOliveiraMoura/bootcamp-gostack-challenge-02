@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { useField } from '@rocketseat/unform';
-import CurrencyInput from 'react-currency-input';
+import NumberFormat from 'react-number-format';
 import PropTypes from 'prop-types';
 
 import { Container } from './styles';
@@ -33,7 +33,7 @@ export default function DatePicker({
       registerField({
         name: fieldName,
         ref: ref.current,
-        path: 'state.value',
+        path: 'state.numAsString',
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,14 +42,16 @@ export default function DatePicker({
   return (
     <Container className={className}>
       {label && <label htmlFor={fieldName}>{label}</label>}
-      <CurrencyInput
+      <NumberFormat
         name={fieldName}
         value={value}
+        thousandSeparator
         prefix={currencySymbol}
-        onChangeEvent={(event, maskedValue, rawValue) => {
-          setValue(maskedValue);
-          onChange(rawValue);
+        onValueChange={({ floatValue, formattedValue }) => {
+          setValue(formattedValue);
+          onChange(floatValue);
         }}
+        decimalScale="2"
         ref={ref}
         {...rest}
       />
