@@ -13,6 +13,7 @@ import Table from '~/components/Table';
 import ConfirmDialog from '~/components/ConfirmDialog';
 import EmptyContainer from '~/components/EmptyContainer';
 import Pagination from '~/components/Pagination';
+import Loader from '~/components/Loader';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -23,26 +24,35 @@ export default function Enrolments() {
   const [pages, setPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     async function loadEnrolments() {
-      const response = await api.get('/enrolments', {
-        params: { page: currentPage },
-      });
-      const data = response.data.map(enrolment => ({
-        ...enrolment,
-        formatted_start_date: format(
-          parseISO(enrolment.start_date),
-          "dd 'de' MMMM 'de' yyyy",
-          { locale: pt }
-        ),
-        formatted_end_date: format(
-          parseISO(enrolment.end_date),
-          "dd 'de' MMMM 'de' yyyy",
-          { locale: pt }
-        ),
-      }));
-      setEnrolments(data);
-      setPages(Number(response.headers.total_pages));
+      try {
+        setLoading(true);
+        const response = await api.get('/enrolments', {
+          params: { page: currentPage },
+        });
+        const data = response.data.map(enrolment => ({
+          ...enrolment,
+          formatted_start_date: format(
+            parseISO(enrolment.start_date),
+            "dd 'de' MMMM 'de' yyyy",
+            { locale: pt }
+          ),
+          formatted_end_date: format(
+            parseISO(enrolment.end_date),
+            "dd 'de' MMMM 'de' yyyy",
+            { locale: pt }
+          ),
+        }));
+        setEnrolments(data);
+        setPages(Number(response.headers.total_pages));
+      } catch (error) {
+        toast.error('Erro ao carregar matrículas');
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadEnrolments();
@@ -143,6 +153,7 @@ export default function Enrolments() {
       ) : (
         <EmptyContainer>Nenhuma matrícula encontrada</EmptyContainer>
       )}
+      <Loader visible={loading} />
     </Container>
   );
 }

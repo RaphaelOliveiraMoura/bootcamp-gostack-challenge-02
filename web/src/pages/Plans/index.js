@@ -13,6 +13,7 @@ import HeadContent from '~/components/HeadContent';
 import ConfirmDialog from '~/components/ConfirmDialog';
 import Pagination from '~/components/Pagination';
 import EmptyContainer from '~/components/EmptyContainer';
+import Loader from '~/components/Loader';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -25,24 +26,33 @@ export default function Plans() {
   const [pages, setPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     async function loadPlans() {
-      const response = await api.get('/plans', {
-        params: { page: currentPage },
-      });
+      try {
+        setLoading(true);
+        const response = await api.get('/plans', {
+          params: { page: currentPage },
+        });
 
-      const data = response.data.map(plan => ({
-        ...plan,
-        formattedDuration: formatDistanceStrict(
-          addMonths(new Date(), plan.duration),
-          new Date(),
-          { locale: pt, unit: 'month' }
-        ),
-        formattedPrice: formatPrice(plan.price),
-      }));
+        const data = response.data.map(plan => ({
+          ...plan,
+          formattedDuration: formatDistanceStrict(
+            addMonths(new Date(), plan.duration),
+            new Date(),
+            { locale: pt, unit: 'month' }
+          ),
+          formattedPrice: formatPrice(plan.price),
+        }));
 
-      setPlans(data);
-      setPages(Number(response.headers.total_pages));
+        setPlans(data);
+        setPages(Number(response.headers.total_pages));
+      } catch (error) {
+        toast.error('Erro ao carregar planos');
+      } finally {
+        setLoading(false);
+      }
     }
     loadPlans();
   }, [currentPage]);
@@ -123,6 +133,7 @@ export default function Plans() {
       ) : (
         <EmptyContainer>Nenhum plano encontrado</EmptyContainer>
       )}
+      <Loader visible={loading} />
     </Container>
   );
 }

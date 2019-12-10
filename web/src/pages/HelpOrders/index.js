@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 import { Container, AnswerButton } from './styles';
+import { toast } from 'react-toastify';
 
+import Form from './Form';
 import HeadContent from '~/components/HeadContent';
 import Table from '~/components/Table';
 import EmptyContainer from '~/components/EmptyContainer';
 import Pagination from '~/components/Pagination';
 import ConfirmDialog from '~/components/ConfirmDialog';
-import Form from './Form';
+import Loader from '~/components/Loader';
 
 import api from '~/services/api';
 
@@ -17,13 +19,22 @@ export default function HelpOrders() {
   const [pages, setPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     async function loadHelpOrders() {
-      const response = await api.get('/help-orders', {
-        params: { page: currentPage },
-      });
-      setHelpOrders(response.data);
-      setPages(Number(response.headers.total_pages));
+      try {
+        setLoading(true);
+        const response = await api.get('/help-orders', {
+          params: { page: currentPage },
+        });
+        setHelpOrders(response.data);
+        setPages(Number(response.headers.total_pages));
+      } catch (error) {
+        toast.error('Erro ao carregar pedidos de auxílio');
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadHelpOrders();
@@ -73,6 +84,7 @@ export default function HelpOrders() {
       ) : (
         <EmptyContainer>Nenhum pedido de auxílio encontrado</EmptyContainer>
       )}
+      <Loader visible={loading} />
     </Container>
   );
 }

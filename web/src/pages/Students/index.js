@@ -11,6 +11,7 @@ import Table from '~/components/Table';
 import Pagination from '~/components/Pagination';
 import Input from '~/components/Input';
 import EmptyContainer from '~/components/EmptyContainer';
+import Loader from '~/components/Loader';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -22,17 +23,26 @@ export default function Students() {
   const [pages, setPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     async function loadStudents() {
-      const response = await api.get('/students', {
-        params: {
-          page: currentPage,
-          per_page: 10,
-          q: filter,
-        },
-      });
-      setStudents(response.data);
-      setPages(Number(response.headers.total_pages));
+      try {
+        setLoading(true);
+        const response = await api.get('/students', {
+          params: {
+            page: currentPage,
+            per_page: 10,
+            q: filter,
+          },
+        });
+        setStudents(response.data);
+        setPages(Number(response.headers.total_pages));
+      } catch (error) {
+        toast.error('Erro ao carregar alunos');
+      } finally {
+        setLoading(false);
+      }
     }
 
     loadStudents();
@@ -124,6 +134,7 @@ export default function Students() {
       ) : (
         <EmptyContainer>Nenhum aluno encontrado</EmptyContainer>
       )}
+      <Loader visible={loading} />
     </Container>
   );
 }
