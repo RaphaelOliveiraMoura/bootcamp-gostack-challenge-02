@@ -24,7 +24,7 @@ class AnswerHelpOrderController {
   async store(request, response) {
     const { helpOrder } = request;
 
-    helpOrder.update({
+    await helpOrder.update({
       answer: request.body.answer,
       answer_at: new Date(),
     });

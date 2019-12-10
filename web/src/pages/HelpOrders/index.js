@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { toast } from 'react-toastify';
 import { Container, AnswerButton } from './styles';
@@ -21,24 +21,24 @@ export default function HelpOrders() {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function loadHelpOrders() {
-      try {
-        setLoading(true);
-        const response = await api.get('/help-orders', {
-          params: { page: currentPage },
-        });
-        setHelpOrders(response.data);
-        setPages(Number(response.headers.total_pages));
-      } catch (error) {
-        toast.error('Erro ao carregar pedidos de auxílio');
-      } finally {
-        setLoading(false);
-      }
+  const loadHelpOrders = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await api.get('/help-orders', {
+        params: { page: currentPage },
+      });
+      setHelpOrders(response.data);
+      setPages(Number(response.headers.total_pages));
+    } catch (error) {
+      toast.error('Erro ao carregar pedidos de auxílio');
+    } finally {
+      setLoading(false);
     }
-
-    loadHelpOrders();
   }, [currentPage]);
+
+  useEffect(() => {
+    loadHelpOrders();
+  }, [loadHelpOrders]);
 
   function handleOpenDialog(helpOrder) {
     ConfirmDialog({
@@ -46,8 +46,9 @@ export default function HelpOrders() {
         <Form
           helpOrder={helpOrder}
           closeDialog={closeDialog}
-          helpOrders={helpOrders}
-          setHelpOrders={setHelpOrders}
+          loadHelpOrders={
+            currentPage === 1 ? () => loadHelpOrders() : () => setCurrentPage(1)
+          }
         />
       ),
     });

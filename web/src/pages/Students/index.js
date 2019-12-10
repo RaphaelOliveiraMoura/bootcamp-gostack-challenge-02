@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { MdAdd } from 'react-icons/md';
@@ -25,37 +25,40 @@ export default function Students() {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function loadStudents() {
-      try {
-        setLoading(true);
-        const response = await api.get('/students', {
-          params: {
-            page: currentPage,
-            per_page: 10,
-            q: filter,
-          },
-        });
-        setStudents(response.data);
-        setPages(Number(response.headers.total_pages));
-      } catch (error) {
-        toast.error('Erro ao carregar alunos');
-      } finally {
-        setLoading(false);
-      }
+  const loadStudents = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await api.get('/students', {
+        params: {
+          page: currentPage,
+          per_page: 10,
+          q: filter,
+        },
+      });
+      setStudents(response.data);
+      setPages(Number(response.headers.total_pages));
+    } catch (error) {
+      toast.error('Erro ao carregar alunos');
+    } finally {
+      setLoading(false);
     }
-
-    loadStudents();
   }, [currentPage, filter]);
+
+  useEffect(() => {
+    loadStudents();
+  }, [loadStudents]);
 
   async function handleDelete(student) {
     async function deleteUser() {
       try {
         await api.delete(`/students/${student.id}`);
-        setStudents(
-          students.filter(currentStudent => currentStudent.id !== student.id)
-        );
         toast.success('Aluno deletado com sucesso');
+
+        if (currentPage === 1) {
+          loadStudents();
+        } else {
+          setCurrentPage(1);
+        }
       } catch (error) {
         toast.error('Erro ao deletar aluno');
       }

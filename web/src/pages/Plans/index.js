@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDistanceStrict, addMonths } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -28,41 +28,47 @@ export default function Plans() {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function loadPlans() {
-      try {
-        setLoading(true);
-        const response = await api.get('/plans', {
-          params: { page: currentPage },
-        });
+  const loadPlans = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await api.get('/plans', {
+        params: { page: currentPage },
+      });
 
-        const data = response.data.map(plan => ({
-          ...plan,
-          formattedDuration: formatDistanceStrict(
-            addMonths(new Date(), plan.duration),
-            new Date(),
-            { locale: pt, unit: 'month' }
-          ),
-          formattedPrice: formatPrice(plan.price),
-        }));
+      const data = response.data.map(plan => ({
+        ...plan,
+        formattedDuration: formatDistanceStrict(
+          addMonths(new Date(), plan.duration),
+          new Date(),
+          { locale: pt, unit: 'month' }
+        ),
+        formattedPrice: formatPrice(plan.price),
+      }));
 
-        setPlans(data);
-        setPages(Number(response.headers.total_pages));
-      } catch (error) {
-        toast.error('Erro ao carregar planos');
-      } finally {
-        setLoading(false);
-      }
+      setPlans(data);
+      setPages(Number(response.headers.total_pages));
+    } catch (error) {
+      toast.error('Erro ao carregar planos');
+    } finally {
+      setLoading(false);
     }
-    loadPlans();
   }, [currentPage]);
+
+  useEffect(() => {
+    loadPlans();
+  }, [loadPlans]);
 
   async function handleDelete(plan) {
     async function deletePlan() {
       try {
         await api.delete(`/plans/${plan.id}`);
-        setPlans(plans.filter(currentPlan => currentPlan.id !== plan.id));
         toast.success('Plano deletado com sucesso');
+
+        if (currentPage === 1) {
+          loadPlans();
+        } else {
+          setCurrentPage(1);
+        }
       } catch (error) {
         toast.error('Erro ao deletar plano');
       }

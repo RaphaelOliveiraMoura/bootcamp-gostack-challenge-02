@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { parseISO, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -26,48 +26,49 @@ export default function Enrolments() {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function loadEnrolments() {
-      try {
-        setLoading(true);
-        const response = await api.get('/enrolments', {
-          params: { page: currentPage },
-        });
-        const data = response.data.map(enrolment => ({
-          ...enrolment,
-          formatted_start_date: format(
-            parseISO(enrolment.start_date),
-            "dd 'de' MMMM 'de' yyyy",
-            { locale: pt }
-          ),
-          formatted_end_date: format(
-            parseISO(enrolment.end_date),
-            "dd 'de' MMMM 'de' yyyy",
-            { locale: pt }
-          ),
-        }));
-        setEnrolments(data);
-        setPages(Number(response.headers.total_pages));
-      } catch (error) {
-        toast.error('Erro ao carregar matrículas');
-      } finally {
-        setLoading(false);
-      }
+  const loadEnrolments = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await api.get('/enrolments', {
+        params: { page: currentPage },
+      });
+      const data = response.data.map(enrolment => ({
+        ...enrolment,
+        formatted_start_date: format(
+          parseISO(enrolment.start_date),
+          "dd 'de' MMMM 'de' yyyy",
+          { locale: pt }
+        ),
+        formatted_end_date: format(
+          parseISO(enrolment.end_date),
+          "dd 'de' MMMM 'de' yyyy",
+          { locale: pt }
+        ),
+      }));
+      setEnrolments(data);
+      setPages(Number(response.headers.total_pages));
+    } catch (error) {
+      toast.error('Erro ao carregar matrículas');
+    } finally {
+      setLoading(false);
     }
-
-    loadEnrolments();
   }, [currentPage]);
+
+  useEffect(() => {
+    loadEnrolments();
+  }, [loadEnrolments]);
 
   async function handleDelete(enrolment) {
     async function deleteEnrolment() {
       try {
         await api.delete(`/enrolments/${enrolment.id}`);
-        setEnrolments(
-          enrolments.filter(
-            currentEnrolment => currentEnrolment.id !== enrolment.id
-          )
-        );
         toast.success('Matrícula deletada com sucesso');
+
+        if (currentPage === 1) {
+          loadEnrolments();
+        } else {
+          setCurrentPage(1);
+        }
       } catch (error) {
         toast.error('Erro ao deletar matrícula');
       }

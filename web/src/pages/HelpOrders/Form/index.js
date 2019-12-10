@@ -17,25 +17,13 @@ const schema = Yup.object().shape({
   ),
 });
 
-export default function Form({
-  helpOrder,
-  closeDialog,
-  helpOrders,
-  setHelpOrders,
-}) {
+export default function Form({ helpOrder, closeDialog, loadHelpOrders }) {
   async function handleSubmit({ answer }) {
     try {
       await api.post(`help-orders/${helpOrder.id}/answer`, { answer });
-
-      closeDialog();
-
-      setHelpOrders(
-        helpOrders.filter(
-          currentHelpOrder => currentHelpOrder.id !== helpOrder.id
-        )
-      );
-
       toast.success('Resposta enviada para o aluno');
+      loadHelpOrders();
+      closeDialog();
     } catch (error) {
       toast.error('Erro ao salvar resposta');
     }
@@ -60,6 +48,5 @@ Form.propTypes = {
     question: PropTypes.string,
   }).isRequired,
   closeDialog: PropTypes.func.isRequired,
-  helpOrders: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  setHelpOrders: PropTypes.func.isRequired,
+  loadHelpOrders: PropTypes.func.isRequired,
 };
