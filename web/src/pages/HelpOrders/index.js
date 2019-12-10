@@ -46,8 +46,8 @@ export default function HelpOrders() {
         <Form
           helpOrder={helpOrder}
           closeDialog={closeDialog}
-          loadHelpOrders={
-            currentPage === 1 ? () => loadHelpOrders() : () => setCurrentPage(1)
+          loadHelpOrders={() =>
+            currentPage === 1 ? loadHelpOrders() : setCurrentPage(1)
           }
         />
       ),
