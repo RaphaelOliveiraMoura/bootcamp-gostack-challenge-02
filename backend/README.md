@@ -32,6 +32,8 @@
   ~ yarn start
 ```
 
+I choose not use **sucrase** because I wanted to configurate root import plugin in the app, and then the way that I found was use **babel** instead sucrase.
+
 # 🚀 Preparing and running application
 
 ## Installing project and dependences
