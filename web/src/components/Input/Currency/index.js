@@ -52,6 +52,7 @@ export default function DatePicker({
           onChange(floatValue);
         }}
         decimalScale="2"
+        allowNegative={false}
         ref={ref}
         {...rest}
       />
