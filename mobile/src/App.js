@@ -1,6 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { useSelector } from 'react-redux';
+
+import createRouter from './routes';
 
 export default function App() {
-  return <Text>Gympoint Desafio final</Text>;
+  const signed = useSelector(state => state.auth.signed);
+
+  const Router = createRouter(signed);
+
+  return <Router />;
 }
