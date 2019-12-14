@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import express from 'express';
 import { resolve } from 'path';
-import '~/database';
 import cors from 'cors';
 
+import '~/database';
 import routes from '~/routes';
 
 class App {
