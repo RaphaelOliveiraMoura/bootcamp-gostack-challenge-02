@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Container, Logo, LogoTitle, IdInput, SubmitButton } from './styles';
 import logo from '~/assets/logo.png';
 
+import { signInRequest } from '~/store/modules/auth/actions';
+
 export default function SignIn() {
+  const [id, setId] = useState(null);
+  const dispatch = useDispatch();
+
+  async function handleSubmit() {
+    dispatch(signInRequest(id));
+  }
+
   return (
     <Container>
       <Logo source={logo} />
@@ -14,8 +24,10 @@ export default function SignIn() {
         autoCorrect={false}
         autoCapitalize="none"
         keyboardType="numeric"
+        value={id}
+        onChangeText={setId}
       />
-      <SubmitButton>Entrar no sistema</SubmitButton>
+      <SubmitButton onPress={handleSubmit}>Entrar no sistema</SubmitButton>
     </Container>
   );
 }

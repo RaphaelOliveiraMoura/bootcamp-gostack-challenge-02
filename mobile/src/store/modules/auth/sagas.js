@@ -13,9 +13,16 @@ export function* signIn({ payload }) {
 
     const response = yield call(api.get, `/students/${id}`);
 
-    yield put(signInSuccess(response.data));
+    if (response.data) {
+      yield put(signInSuccess(response.data));
+    } else {
+      Alert.alert('Falha na autenticação', 'Usuário inválido');
+    }
   } catch (error) {
-    Alert.alert('Falha na autenticação', 'Usuário inválido');
+    Alert.alert(
+      'Falha na autenticação',
+      'Verifique sua conexaão com a internet'
+    );
   }
 }
 

@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import { TouchableOpacity } from 'react-native';
+
 export const Container = styled.View.attrs()`
   border-style: solid;
   border-bottom-color: #dddddd;
@@ -15,7 +17,11 @@ export const Container = styled.View.attrs()`
   height: 44px;
 `;
 
-export const Logo = styled.Image.attrs({
+export const Logo = styled(TouchableOpacity)`
+  flex-direction: row;
+`;
+
+export const LogoImage = styled.Image.attrs({
   resizeMode: 'contain',
 })`
   width: 36px;
