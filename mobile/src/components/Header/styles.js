@@ -1,7 +1,5 @@
 import styled from 'styled-components/native';
 
-import { TouchableOpacity } from 'react-native';
-
 export const Container = styled.View.attrs()`
   border-style: solid;
   border-bottom-color: #dddddd;
@@ -17,7 +15,7 @@ export const Container = styled.View.attrs()`
   height: 44px;
 `;
 
-export const Logo = styled(TouchableOpacity)`
+export const Logo = styled.View`
   flex-direction: row;
 `;
 
@@ -33,4 +31,9 @@ export const LogoTitle = styled.Text`
   font-weight: bold;
   color: #ee4e62;
   margin-left: 8px;
+`;
+
+export const LogoutButton = styled.TouchableOpacity`
+  position: absolute;
+  right: 16px;
 `;

@@ -9,12 +9,16 @@ import App from '~/App';
 
 import { store, persistor } from '~/store';
 
+import SafeAreaView from '~/components/SafeAreaView';
+
 export default function Index() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-        <App />
+        <SafeAreaView>
+          <App />
+        </SafeAreaView>
       </PersistGate>
     </Provider>
   );

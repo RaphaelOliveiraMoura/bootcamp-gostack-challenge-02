@@ -3,10 +3,9 @@ import { Alert } from 'react-native';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { QuestionInput, SubmitButton } from './styles';
+import { Container, QuestionInput, SubmitButton } from './styles';
 
 import Header from '~/components/Header';
-import Container from '~/components/Container';
 
 import api from '~/services/api';
 
