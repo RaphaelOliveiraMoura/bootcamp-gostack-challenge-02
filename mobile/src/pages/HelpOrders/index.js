@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Alert } from 'react-native';
+import { parseISO, formatRelative } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import {
   AddButton,
@@ -14,24 +18,40 @@ import {
 import Header from '~/components/Header';
 import Container from '~/components/Container';
 
-const helpOrders = [
-  {
-    id: 1,
-    question:
-      'Olá pessoal da academia, gostaria de saber se quando acordar devo ingerir batata doce e frango logo de primeira, preparar as Olá pessoal da academia, gostaria de saber se quando acordar devo ingerir batata doce e frango logo de primeira, preparar as Olá pessoal da academia, gostaria de saber se quando acordar devo ingerir batata doce e frango logo de primeira, preparar as',
-    time: 'Há 2 horas',
-    answer: null,
-  },
-  {
-    id: 2,
-    question: 'Olá pessoal da arango logo de primeira, preparar as...',
-    answer:
-      'Opa, isso aí, duas em duas horas, não deixa pra depois, um monstro treina como um, come como dois.',
-    time: 'Há 2 horas',
-  },
-];
+import api from '~/services/api';
 
 export default function HelpOrders({ navigation }) {
+  const student = useSelector(state => state.auth.student);
+
+  const [helpOrders, setHelpOrders] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const loadHelpOrders = useCallback(async () => {
+    try {
+      setRefreshing(true);
+      const response = await api.get(`/students/${student.id}/help-orders`);
+      const data = response.data.map(helpOrder => ({
+        ...helpOrder,
+        time: formatRelative(parseISO(helpOrder.createdAt), new Date(), {
+          locale: pt,
+        }),
+      }));
+
+      setHelpOrders(data);
+    } catch (error) {
+      Alert.alert(
+        'Erro ao listar pedidos de auxílio',
+        'Verifique sua conexão com a rede'
+      );
+    } finally {
+      setRefreshing(false);
+    }
+  }, [student.id]);
+
+  useEffect(() => {
+    loadHelpOrders();
+  }, [loadHelpOrders, student.id]);
+
   return (
     <>
       <Header />
@@ -59,6 +79,8 @@ export default function HelpOrders({ navigation }) {
               <Question>{item.question}</Question>
             </HelpOrderContainer>
           )}
+          refreshing={refreshing}
+          onRefresh={loadHelpOrders}
         />
       </Container>
     </>

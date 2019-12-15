@@ -35,3 +35,10 @@ export const Answer = styled.Text`
   font-size: 14px;
   color: #666666;
 `;
+
+export const NotAnswer = styled.Text`
+  font-size: 14px;
+  font-weight: bold;
+  color: #ddd;
+  margin-bottom: 16px;
+`;

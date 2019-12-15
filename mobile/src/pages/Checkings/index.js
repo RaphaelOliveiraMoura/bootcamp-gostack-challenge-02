@@ -19,15 +19,17 @@ import api from '~/services/api';
 
 export default function Checkings() {
   const [checkings, setCheckings] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
 
   const student = useSelector(state => state.auth.student);
 
   const loadCheckings = useCallback(async () => {
     try {
+      setRefreshing(true);
       const response = await api.get(`/students/${student.id}/checkins`);
-      const data = response.data.map(checking => ({
+      const data = response.data.map((checking, index) => ({
         ...checking,
-        formattedId: `Check-in #${checking.id}`,
+        formattedId: `Check-in #${response.data.length - index}`,
         formattedTime: formatRelative(
           parseISO(checking.createdAt),
           new Date(),
@@ -40,6 +42,8 @@ export default function Checkings() {
         'Erro na listagem de checkings',
         'Verifique sua conexão com a internet'
       );
+    } finally {
+      setRefreshing(false);
     }
   }, [student.id]);
 
@@ -80,6 +84,8 @@ export default function Checkings() {
               <CheckingTime>{item.formattedTime}</CheckingTime>
             </CheckingContainer>
           )}
+          refreshing={refreshing}
+          onRefresh={loadCheckings}
         />
       </Container>
     </>

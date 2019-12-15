@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {
   Card,
@@ -7,12 +8,15 @@ import {
   QuestionTime,
   Question,
   Answer,
+  NotAnswer,
 } from './styles';
 
 import Header from '~/components/Header';
 import Container from '~/components/Container';
 
-export default function Info() {
+export default function Info({ navigation }) {
+  const helpOrder = navigation.getParam('helpOrder');
+
   return (
     <>
       <Header />
@@ -20,20 +24,26 @@ export default function Info() {
         <Card>
           <QuestionHeader>
             <Title>PERGUNTA</Title>
-            <QuestionTime>Hoje às 14h</QuestionTime>
+            <QuestionTime>{helpOrder.time}</QuestionTime>
           </QuestionHeader>
-          <Question>
-            Olá pessoal da academia, gostaria de saber se quando acordar devo
-            ingerir batata doce e frango logo de primeira, preparar as marmitas
-            e lotar a geladeira? Dou um pico de insulina e jogo o hipercalórico?
-          </Question>
-          <Title>RESPOSTA</Title>
-          <Answer>
-            Opa, isso aí, duas em duas horas, não deixa pra depois, um monstro
-            treina como um, come como dois.
-          </Answer>
+          <Question>{helpOrder.question}</Question>
+
+          {helpOrder.answer ? (
+            <>
+              <Title>RESPOSTA</Title>
+              <Answer>{helpOrder.answer}</Answer>
+            </>
+          ) : (
+            <NotAnswer>SEM RESPOSTA</NotAnswer>
+          )}
         </Card>
       </Container>
     </>
   );
 }
+
+Info.propTypes = {
+  navigation: PropTypes.shape({
+    getParam: PropTypes.func,
+  }).isRequired,
+};

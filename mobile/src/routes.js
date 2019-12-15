@@ -15,6 +15,7 @@ const BottomTabPages = {
     screen: Checkings,
     navigationOptions: {
       tabBarLabel: 'Check-ins',
+      // eslint-disable-next-line react/prop-types
       tabBarIcon: ({ tintColor }) => (
         <Icon name="edit-location" size={20} color={tintColor} />
       ),
@@ -41,6 +42,7 @@ const BottomTabPages = {
     ),
     navigationOptions: {
       tabBarLabel: 'Pedir ajuda',
+      // eslint-disable-next-line react/prop-types
       tabBarIcon: ({ tintColor }) => (
         <Icon name="live-help" size={20} color={tintColor} />
       ),
