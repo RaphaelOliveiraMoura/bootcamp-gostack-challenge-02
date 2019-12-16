@@ -12,6 +12,12 @@ export function signInSuccess(student) {
   };
 }
 
+export function signInFailure() {
+  return {
+    type: '@auth/SIGN_IN_FAILURE',
+  };
+}
+
 export function signOut() {
   return {
     type: '@auth/SIGN_OUT',

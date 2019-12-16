@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Alert } from 'react-native';
 
 import { Container, Logo, LogoTitle, IdInput, SubmitButton } from './styles';
@@ -10,6 +10,7 @@ import { signInRequest } from '~/store/modules/auth/actions';
 export default function SignIn() {
   const [id, setId] = useState(null);
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
 
   async function handleSubmit() {
     if (id) {
@@ -32,7 +33,9 @@ export default function SignIn() {
         value={id}
         onChangeText={setId}
       />
-      <SubmitButton onPress={handleSubmit}>Entrar no sistema</SubmitButton>
+      <SubmitButton onPress={handleSubmit} loading={loading}>
+        Entrar no sistema
+      </SubmitButton>
     </Container>
   );
 }

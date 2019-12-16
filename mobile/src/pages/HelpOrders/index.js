@@ -17,6 +17,7 @@ import {
 
 import Header from '~/components/Header';
 import Container from '~/components/Container';
+import EmptyContainer from '~/components/EmptyContainer';
 
 import api from '~/services/api';
 
@@ -49,8 +50,14 @@ export default function HelpOrders({ navigation }) {
   }, [student.id]);
 
   useEffect(() => {
+    navigation.addListener('didFocus', () => {
+      loadHelpOrders();
+    });
+  }, [loadHelpOrders, navigation]);
+
+  useEffect(() => {
     loadHelpOrders();
-  }, [loadHelpOrders, student.id]);
+  }, [loadHelpOrders]);
 
   return (
     <>
@@ -81,6 +88,11 @@ export default function HelpOrders({ navigation }) {
           )}
           refreshing={refreshing}
           onRefresh={loadHelpOrders}
+          ListEmptyComponent={
+            <EmptyContainer>
+              Nenhum pedido de auxílio criado até o momento
+            </EmptyContainer>
+          }
         />
       </Container>
     </>
@@ -90,5 +102,6 @@ export default function HelpOrders({ navigation }) {
 HelpOrders.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func,
+    addListener: PropTypes.func,
   }).isRequired,
 };

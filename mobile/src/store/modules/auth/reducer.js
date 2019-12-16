@@ -22,6 +22,11 @@ export default function auth(state = INITIAL_STATE, action) {
         draft.loading = false;
         break;
       }
+      case '@auth/SIGN_IN_FAILURE': {
+        draft.student = null;
+        draft.loading = false;
+        break;
+      }
       default:
         break;
     }

@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import api from '~/services/api';
 
-import { signInSuccess } from './actions';
+import { signInSuccess, signInFailure } from './actions';
 
 export function* signIn({ payload }) {
   try {
@@ -17,12 +17,14 @@ export function* signIn({ payload }) {
       yield put(signInSuccess(response.data));
     } else {
       Alert.alert('Falha na autenticação', 'Usuário inválido');
+      yield put(signInFailure());
     }
   } catch (error) {
     Alert.alert(
       'Falha na autenticação',
       'Verifique sua conexaão com a internet'
     );
+    yield put(signInFailure());
   }
 }
 

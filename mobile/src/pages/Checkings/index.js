@@ -15,6 +15,8 @@ import {
 
 import Header from '~/components/Header';
 import Container from '~/components/Container';
+import EmptyContainer from '~/components/EmptyContainer';
+
 import api from '~/services/api';
 
 export default function Checkings() {
@@ -86,6 +88,11 @@ export default function Checkings() {
           )}
           refreshing={refreshing}
           onRefresh={loadCheckings}
+          ListEmptyComponent={
+            <EmptyContainer>
+              Nenhum checking realizado essa semana
+            </EmptyContainer>
+          }
         />
       </Container>
     </>
