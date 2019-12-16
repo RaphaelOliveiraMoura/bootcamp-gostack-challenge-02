@@ -26,7 +26,7 @@
   - react-native start
 ```
 
-This app was made and tested just in a android smartphone. Because I dont't have support to run and test in a IOS phone. So probabily will be some UI mistakes to IOS Plataform.
+<p style="color: #ff4241;">This app was made and tested just in a android smartphone. Because I dont't have support to run and test in a IOS phone. So probabily will be some UI mistakes to IOS Plataform.</p>
 
 # 🚀 Preparing and running application
 
