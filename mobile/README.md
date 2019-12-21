@@ -43,10 +43,12 @@
 - Emulator or USB smartphone plugged.
 - React native CLI
 
+You need to change `~/src/services/api.js` file with your pc network address and the port that the api is running.
+
 ## Running application
 
 ```
-  ~ react-native run:android (or run:ios)
+  ~ react-native run-android (or run-ios)
 
   ~ react-native start
 ```
@@ -66,6 +68,8 @@ If you try connect with USB, certify that you phone is connected:
 ```
   ~ adb devices
 ```
+
+If the mobile app cannot conenct with your api even after you configurate `~/src/services/api.js` file with the correct adrres that your api is running. You can try shake your phone, open the `Debug server host & port for device` and put your network addres and the port `8081`.
 
 # 🕶️ Contributing
 
