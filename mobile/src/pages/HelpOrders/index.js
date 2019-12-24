@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import { Alert } from 'react-native';
 import { parseISO, formatRelative } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
   AddButton,
   HelpOrdersList,
   HelpOrderContainer,
   HelpOrderHeader,
+  HelpOrderHeaderIcon,
   Answered,
   HelpOrderTime,
   Question,
@@ -77,9 +79,15 @@ export default function HelpOrders({ navigation }) {
             >
               <HelpOrderHeader>
                 {item.answer ? (
-                  <Answered>Respondido</Answered>
+                  <HelpOrderHeaderIcon>
+                    <Icon name="check-circle" size={20} color="#42cb59" />
+                    <Answered>Respondido</Answered>
+                  </HelpOrderHeaderIcon>
                 ) : (
-                  <Answered disabled>Não respondido</Answered>
+                  <HelpOrderHeaderIcon>
+                    <Icon name="check-circle" size={20} color="#999" />
+                    <Answered disabled>Não respondido</Answered>
+                  </HelpOrderHeaderIcon>
                 )}
                 <HelpOrderTime>{item.time}</HelpOrderTime>
               </HelpOrderHeader>

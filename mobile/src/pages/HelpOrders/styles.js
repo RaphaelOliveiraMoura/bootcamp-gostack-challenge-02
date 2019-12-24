@@ -19,16 +19,23 @@ export const HelpOrderContainer = styled.TouchableOpacity`
 export const HelpOrderHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+`;
+
+export const HelpOrderHeaderIcon = styled.View`
+  flex-direction: row;
+  align-items: center;
 `;
 
 export const Answered = styled.Text`
   font-size: 14px;
   font-weight: bold;
   color: ${props => (props.disabled ? '#999999' : '#42CB59')};
+  margin-left: 8px;
 `;
 
 export const HelpOrderTime = styled.Text`
-  font-size: 14px;
+  font-size: 11px;
   color: #666666;
 `;
 
